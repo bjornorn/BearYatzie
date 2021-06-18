@@ -4,9 +4,9 @@ namespace BearDiceGame
 {
     public class DiceArt
     {
-        public static string[] ThreeDiceA = { " -----  ", "|O----| ", "|--O--| ", "|----O| ", " -----  " };
-        public static string[] FourDiceA = { " -----  ", "|O---O| ", "|-----| ", "|O---O| ", " -----  " };
-            //┘└┌┐
+        //public static string[] ThreeDiceA = { " -----  ", "|O----| ", "|--O--| ", "|----O| ", " -----  " };
+        //public static string[] FourDiceA = { " -----  ", "|O---O| ", "|-----| ", "|O---O| ", " -----  " };
+
 
         public static void OneDice(int x, int y)
         {
@@ -100,21 +100,6 @@ namespace BearDiceGame
             Console.WriteLine("|? ? ?| ");
             Console.SetCursorPosition(x, y + 4);
             Console.WriteLine("└-----┘ ");
-        }
-
-        public static void ThreeArray()
-        {
-            foreach (var line in ThreeDiceA)
-            {
-                Console.WriteLine(line + line);
-            }
-
-            Console.WriteLine();
-
-            for (var i = 0; i < ThreeDiceA.Length; i++)
-            {
-                Console.WriteLine(ThreeDiceA[i] + FourDiceA[i]);
-            }
         }
     }
 }

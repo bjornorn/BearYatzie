@@ -7,7 +7,6 @@ namespace BearDiceGame
     {
         public static bool GameOn = false;
         public static bool TurnOn = false;
-        
         public static int turnCounter = 6;
 
         public void UpdateView()
@@ -26,9 +25,7 @@ namespace BearDiceGame
                 new BoardField(felt, id);
                 id++;
             }
-           
             TurnOn = true;
-
         }
         
         public void PlayGame() {
@@ -40,22 +37,14 @@ namespace BearDiceGame
                 {
                     GameEngine.TurnController();
                     UpdateView();
-                } 
-
-
-
-
-
+                }
 
                 Console.WriteLine("Hvor vil du plassere poengene dine? \nSkriv minst 2 av bokstavene på plassering");
                 var input = Console.ReadLine();
                 GameEngine.PlacePoints(input);
                 UpdateView();
                 Console.WriteLine("Trykk en tast for å starte ny runde");
-                //Console.ReadLine();
                 GameEngine.NewRound();
-                
-
             }
         }
 

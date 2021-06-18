@@ -54,13 +54,10 @@ namespace BearDiceGame
                     beep += 100;
                 }
             }
-
             foreach (var felt in BoardField.avalibeList)
             {
                 felt.calcPotential(felt.validvalue);
             }
-
-
             if (rollCounter < 1)
             {
                 GameBearYatzie.TurnOn = false;
@@ -89,21 +86,14 @@ namespace BearDiceGame
                     {
                         i = felt.validvalue;
                     }
-                    else
-                    {
-                        feil++;
-                    }
+                    else { feil++; }
                 }
 
                 foreach (var felt in BoardField.avalibeList)
                 {
-                    if (felt.shortname != shortinput)
-                    {
-                        skrivefeil++;
-                    }
+                    if (felt.shortname != shortinput) { skrivefeil++; }
                     if (skrivefeil >= BoardField.avalibeList.Count)
                     {
-                    
                     Console.SetCursorPosition(0, 22);
                     Console.WriteLine(String.Format("{0, -60}", "Feil skrevet, skriv inn på nytt"));
                     Console.Write(new string(' ', Console.WindowWidth));
@@ -116,10 +106,7 @@ namespace BearDiceGame
 
                 foreach (var terning in Dice.DiceList)
                 {
-                    if (terning._diceValue == i)
-                    {
-                        localsum += terning._diceValue;
-                    }
+                    if (terning._diceValue == i) { localsum += terning._diceValue; }
                 }
 
                 foreach (var felt in BoardField.avalibeList)
@@ -143,10 +130,7 @@ namespace BearDiceGame
 
                 foreach (var felt in BoardField.avalibeList)
                 {
-                    if ((felt.name == input) || (felt.shortname == shortinput))
-                    {
-                        felt.avalibe = false;
-                    }
+                    if ((felt.name == input) || (felt.shortname == shortinput)) { felt.avalibe = false; }
                 }
         }
         

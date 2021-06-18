@@ -11,37 +11,26 @@ namespace BearDiceGame
         public string diceName { get; set; }
         public int diceNr { get; set; }
         public static List<Dice> DiceList = new List<Dice>();
-        public static int DiceRollCounter = 0;
-
 
         public Dice(int i)
         {
-           
             diceName = "DiceNo" + (i + 1);
             diceIsLocked = false;
             DiceList.Add(this);
             diceNr = i;
-
-
         }
 
         public int DiceRoll()
         {
            Random random = new Random();
-           
            var diceroll = random.Next(1, 7);
            _diceValue = diceroll;
             return _diceValue;
-
         }
 
-        public static void LockDice(int i)
+        public static void LockDice(int i) 
         {
-
             DiceList[i].diceIsLocked = !DiceList[i].diceIsLocked;
-            //return DiceList[i].diceIsLocked;
-
-            //View.ChooseDice();
         }
 
         public static void ChooseDice(int i, int cursorX, int cursorY)

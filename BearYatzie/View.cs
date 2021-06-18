@@ -11,8 +11,6 @@ namespace BearDiceGame
         public static string RollInfoText = "Trykk \"R\" for å trille terninger \n" +
                                             "Trykk Z X C V eller B for å spare terning";
 
-
-
         public static void Welcome()
         {
             Console.WriteLine(WelcomeMessage);
@@ -20,7 +18,6 @@ namespace BearDiceGame
             Console.WriteLine(Menu);
             string input = Console.ReadLine();
            if (input == "n") new GameBearYatzie();
-           
         }
 
         public void UpdateView()
@@ -32,7 +29,6 @@ namespace BearDiceGame
         public void DrawDice()
         {
             Console.Clear();
-
             Console.SetCursorPosition(0, 27);
             Console.WriteLine("Tilgjengelige terningkast: " + GameEngine.rollCounter);
             Console.WriteLine(RollInfoText);
@@ -76,8 +72,6 @@ namespace BearDiceGame
                     cursorcount += 15;
                 }
                 Console.WriteLine();
-
-              
             }
         }
 
@@ -104,7 +98,6 @@ namespace BearDiceGame
                 if (felt.sum != null)
                 {
                     Console.Write(String.Format("{0,4}   | {1,4}", felt.sum, "\n"));
-                   
                 }
                 else
                 {

@@ -1,0 +1,65 @@
+﻿#Terning(er)
+	vis terning med verdi
+	Lager 5 obj TERNINGER
+	Kan låse terninger
+	Kan kaste terninger
+
+#Spillbrett
+
+#Spiller(e)
+
+#Cpu spiller(e)
+
+
+
+
+public static void PlacePoints(string input)
+        {
+            int feil = 0;
+        
+            
+            foreach (var felt in BoardField.avalibeList)
+            {
+                if (felt.name == input)
+                {
+                    foreach (var terning in Dice.DiceList)
+                    {
+                        if (felt.validvalue == terning._diceValue && felt.avalibe == true)
+                        {
+                           felt.sum += terning._diceValue;
+                            GameEngine.smallsum += terning._diceValue;
+                            //Console.WriteLine(felt.sum);
+                        }
+
+                    }
+
+                }
+                else if (felt.name != input)
+                {
+                    feil++;
+                }
+                
+                if (feil > 5)
+                {
+                    Console.WriteLine("Feil skrevet, skriv inn på nytt");
+                    string nytt = Console.ReadLine();
+                    PlacePoints(nytt);
+                }
+            }
+         
+
+        }
+
+
+
+                            else if (felt.name != input)
+            {
+                feil++;
+            }
+
+            if (feil > 5)
+            {
+                Console.WriteLine("Feil skrevet, skriv inn på nytt");
+                string nytt = Console.ReadLine();
+                PlacePoints(nytt);
+            }

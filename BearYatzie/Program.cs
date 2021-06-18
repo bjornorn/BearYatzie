@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BearYatzie
+namespace BearDiceGame
 {
     class Program
     {

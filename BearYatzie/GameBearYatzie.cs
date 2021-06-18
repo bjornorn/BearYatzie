@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
 
-namespace BearYatzie 
+namespace BearDiceGame
 {
     public class GameBearYatzie : View
     {

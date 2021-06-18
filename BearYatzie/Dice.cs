@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BearDiceGame;
 
-namespace BearYatzie
+namespace BearDiceGame
 {
     public class Dice
     {

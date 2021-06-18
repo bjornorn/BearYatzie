@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace BearYatzie
+namespace BearDiceGame
 {
     public class View
     {
@@ -20,7 +20,7 @@ namespace BearYatzie
             Console.WriteLine(Menu);
             string input = Console.ReadLine();
            if (input == "n") new GameBearYatzie();
-           else if (input == "m") new GameMiniDice();
+           
         }
 
         public void UpdateView()
@@ -114,36 +114,9 @@ namespace BearYatzie
 
             Console.WriteLine("\n");
             Console.WriteLine("Total Sum: " + GameEngine.smallsum);
-            //foreach (var field in BoardField.avalibeList)
-            //{
-            //    Console.WriteLine(field.normalfield);
-            //}
-
-            //Console.WriteLine(String.Format("{0,-18} | {1,-10}", Board.sumstring, Board.sumstring));
-            //Console.WriteLine(Board.Bonus);
-            //foreach (var felt in Board.felter2)
-            //{
-            //    Console.WriteLine(felt);
-            //}
-            //Console.WriteLine(Board.totalsum);
-
+            
         }
-        public static string ShowCounter()
-        {
-            string counter = $"Antall terningkast: {GameMiniDice.rollCounter}";
-            return counter;
-        }
-        public static string ShowSum()
-        {
-            var totalvalue = 0;
-            foreach (var terning in Dice.DiceList)
-            {
-
-                totalvalue += terning._diceValue;
-            }
-            string counter = $"Total sumstring: {totalvalue}";
-            return counter;
-        }
+        
 
 
     }

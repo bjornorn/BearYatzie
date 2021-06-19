@@ -15,7 +15,6 @@ namespace BearDiceGame
 
         public static void TurnController()
         {
-            
             var input = Console.ReadKey();
 
                 switch (input.Key) //Switch on Key enum
@@ -23,23 +22,22 @@ namespace BearDiceGame
                     case ConsoleKey.R:
                        ThrowAndCheck();
                         break;
-                    case ConsoleKey.Z:
+                    case ConsoleKey.D1:
                         Dice.LockDice(0);
                         break;
-                    case ConsoleKey.X:
+                    case ConsoleKey.D2:
                         Dice.LockDice(1);
                         break;
-                    case ConsoleKey.C:
+                    case ConsoleKey.D3:
                         Dice.LockDice(2);
                         break;
-                    case ConsoleKey.V:
+                    case ConsoleKey.D4:
                         Dice.LockDice(3);
                         break;
-                    case ConsoleKey.B:
+                    case ConsoleKey.D5:
                         Dice.LockDice(4);
                         break;
                 }
-
         }
         public static void ThrowAndCheck()
         {
@@ -54,7 +52,7 @@ namespace BearDiceGame
                     beep += 100;
                 }
             }
-            foreach (var felt in BoardField.avalibeList)
+            foreach (var felt in PlayField.avalibeList)
             {
                 felt.calcPotential(felt.validvalue);
             }
@@ -62,10 +60,7 @@ namespace BearDiceGame
             {
                 GameBearYatzie.TurnOn = false;
             }
-
         }
-
-
         public static void PlacePoints(string input)
         {
             input = input.Length >= 2 ? input : "xx";
@@ -74,12 +69,11 @@ namespace BearDiceGame
             input.ToString();
 
             string shortinput = input.Length >= 2 ? input.Substring(0, 2) : "xx";
-
             int feil = 0;
             int skrivefeil = 0;
             int localsum = 0;
             int i = 0;
-                foreach (var felt in BoardField.avalibeList)
+                foreach (var felt in PlayField.avalibeList)
                 {
                     
                     if ((felt.name == input) || (felt.shortname == shortinput))
@@ -89,10 +83,10 @@ namespace BearDiceGame
                     else { feil++; }
                 }
 
-                foreach (var felt in BoardField.avalibeList)
+                foreach (var felt in PlayField.avalibeList)
                 {
                     if (felt.shortname != shortinput) { skrivefeil++; }
-                    if (skrivefeil >= BoardField.avalibeList.Count)
+                    if (skrivefeil >= PlayField.avalibeList.Count)
                     {
                     Console.SetCursorPosition(0, 22);
                     Console.WriteLine(String.Format("{0, -60}", "Feil skrevet, skriv inn på nytt"));
@@ -109,7 +103,7 @@ namespace BearDiceGame
                     if (terning._diceValue == i) { localsum += terning._diceValue; }
                 }
 
-                foreach (var felt in BoardField.avalibeList)
+                foreach (var felt in PlayField.avalibeList)
                 {
                     if (felt.validvalue == i && felt.avalibe == true)
                     {
@@ -127,16 +121,31 @@ namespace BearDiceGame
                         break;
                     }
                 }
-
-                foreach (var felt in BoardField.avalibeList)
+                foreach (var felt in PlayField.avalibeList)
                 {
                     if ((felt.name == input) || (felt.shortname == shortinput)) { felt.avalibe = false; }
                 }
         }
+
+        public static void PP2()
         
+        {
+            var input = Console.ReadKey();
 
-
-
+            switch (input.Key) //Switch on Key enum
+            {
+                case ConsoleKey.DownArrow:
+                    if (PlayField.menuselect < 5) { PlayField.menuselect++; }
+                    if (PlayField.menuselect > 5) { PlayField.menuselect = 0; }
+                    View.UpdateView();
+                    break;
+                case ConsoleKey.UpArrow:
+                    if (PlayField.menuselect > 0) { PlayField.menuselect--; }
+                    if (PlayField.menuselect < 0) { PlayField.menuselect = 5; }
+                    View.UpdateView();
+                    break;
+            }
+        }
 
         public static void NewRound()
         {
@@ -144,18 +153,17 @@ namespace BearDiceGame
             if (GameBearYatzie.turnCounter < 1)
             {
                 EndGame();
-               
             }
             else {
-            rollCounter = 3;
+                 rollCounter = 3;
             
-            foreach (var terning in Dice.DiceList)
-            {
-                terning.diceIsLocked = false;
-                terning._diceValue = 0;
-            }
+                foreach (var terning in Dice.DiceList)
+                {
+                    terning.diceIsLocked = false;
+                    terning._diceValue = 0;
+                }
 
-            GameBearYatzie.TurnOn = true;
+                GameBearYatzie.TurnOn = true;
             }
         }
 
@@ -167,7 +175,7 @@ namespace BearDiceGame
                 Console.WriteLine(String.Format("{0, -60}", "Gratulerer, ganske bra"));
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, 23);
-                foreach (var felt in BoardField.avalibeList)
+                foreach (var felt in PlayField.avalibeList)
                 {
                     felt.sum = null;
                     felt.avalibe = true;
@@ -184,7 +192,7 @@ namespace BearDiceGame
                 Console.WriteLine(String.Format("{0, -60}", "Dette var dårlig, du er et rasshøl!"));
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, 23);
-                foreach (var felt in BoardField.avalibeList)
+                foreach (var felt in PlayField.avalibeList)
                 {
                     felt.sum = null;
                     felt.avalibe = true;

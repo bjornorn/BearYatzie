@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BearDiceGame
 {
-    class BoardField
+    class PlayField
     {
         public bool avalibe { get; set; }
         public int? sum { get; set; }
@@ -17,23 +17,24 @@ namespace BearDiceGame
         public int validvalue { get; set; }
 
         public static string[] smallfields = { "Enere", "Toere", "Treere", "Firere", "Femmere", "Seksere" };
-        public static int[] feltervalue = { 0, 0, 0, 0, 0, 0 };
         public static string sumstring = "Sum";
         public static string Bonus = "Bonus";
         public static string[] felter2 = { "1 Par", "2 Par", "3 like", "4 like", "Liten Straight", "Stor Straight", "Hus", "Sjanse", "Yatzy" };
         public static string totalsum = "Totalsum";
+        public static int menuselect = 0;
 
-        public static List<BoardField> avalibeList = new List<BoardField>();
-        public static List<BoardField> unavalibeList = new List<BoardField>();
-        public static List<BoardField> totalList = new List<BoardField>();
+        public static List<PlayField> avalibeList = new List<PlayField>();
+        public static List<PlayField> unavalibeList = new List<PlayField>();
+        public static List<PlayField> totalList = new List<PlayField>();
 
-        public BoardField(string name, int i)
+        public PlayField(string name, int i)
         {
             this.name = name;
             shortname = name.Substring(0, 2);
             validvalue = i;
             this.avalibe = true;
             //this.sumstring = 0;
+
             this.potentialsum = 0;
             this.normalfield = normalfield;
             avalibeList.Add(this);

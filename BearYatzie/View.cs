@@ -9,7 +9,7 @@ namespace BearDiceGame
         public static string Menu = "Trykk \"N\" for nytt spill\n" +
                                     "Trykk \"M\" for nytt minispill";
         public static string RollInfoText = "Trykk \"R\" for å trille terninger \n" +
-                                            "Trykk Z X C V eller B for å spare terning";
+                                            "Trykk Z X C V eller B for å fryse terning";
 
         public static void Welcome()
         {
@@ -17,16 +17,16 @@ namespace BearDiceGame
             Console.WriteLine();
             Console.WriteLine(Menu);
             string input = Console.ReadLine();
-           if (input == "n") new GameBearYatzie();
+            if (input == "n") new GameBearYatzie();
         }
 
-        public void UpdateView()
+        public static void UpdateView()
         {
             DrawDice();
-            DrawBoard();
+            ScoreField();
         }
 
-        public void DrawDice()
+        public static void DrawDice()
         {
             Console.Clear();
             Console.SetCursorPosition(0, 27);
@@ -75,26 +75,36 @@ namespace BearDiceGame
             }
         }
 
-        public void DrawBoard()
+        public static void ScoreField()
         {
+            int counter = 1;
             Console.WriteLine();
             Console.WriteLine(String.Format("{0,-10}|{1,-10}| {2,-5} |", "", "Mulige Poeng", "Poeng"));
-            //Console.WriteLine();
-            foreach (var felt in BoardField.totalList)
+            for (var i = 0; i < PlayField.totalList.Count; i++)
             {
+                var felt = PlayField.totalList[i];
                 Console.Write("\r");
                 Console.Write(String.Format("{0,-10}|", felt.name));
 
                 if (felt.sum == null)
                 {
-                    Console.Write(String.Format("{0,5}       |",felt.potentialsum));
+                    if (i == PlayField.menuselect && GameBearYatzie.TurnOn == false)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.Write(String.Format("{0,5}       |", felt.potentialsum));
+                        Console.BackgroundColor = ConsoleColor.Black;
+                    }
+                    else
+                    {
+                        Console.Write(String.Format("{0,5}       |", felt.potentialsum));
+                    }
                 }
-                else 
+                else
                 {
                     Console.Write(String.Format("  {0,2}    |", "Ferdig"));
                 }
 
-                
+
                 if (felt.sum != null)
                 {
                     Console.Write(String.Format("{0,4}   | {1,4}", felt.sum, "\n"));
@@ -103,14 +113,12 @@ namespace BearDiceGame
                 {
                     Console.Write(String.Format("{0,4}   | {1,4}", "Tom", "\n"));
                 }
+
+                counter++;
             }
 
             Console.WriteLine("\n");
             Console.WriteLine("Total Sum: " + GameEngine.smallsum);
-            
         }
-        
-
-
     }
 }

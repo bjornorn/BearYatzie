@@ -9,7 +9,7 @@ namespace BearDiceGame
     class GameEngine
     {
         public static int rollCounter = 3;
-        public static int turns = 6;
+        public static int turns = 14;
         public static int smallsum = 0;
 
 
@@ -52,14 +52,22 @@ namespace BearDiceGame
                     beep += 100;
                 }
             }
-            foreach (var felt in PlayField.avalibeList)
+            foreach (var felt in PlayField.smallList)
             {
-                felt.calcPotential(felt.validvalue);
+                felt.smallCalcPotential(felt.validvalue);
             }
+
+            PlayField.bigCalcPotential();
+
             if (rollCounter < 1)
             {
                 GameBearYatzie.TurnOn = false;
             }
+        }
+
+        public static void PlacePoints2(int fieldNo)
+        {
+            PlayField.totalList[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
         }
         public static void PlacePoints(string input)
         {
@@ -73,7 +81,7 @@ namespace BearDiceGame
             int skrivefeil = 0;
             int localsum = 0;
             int i = 0;
-                foreach (var felt in PlayField.avalibeList)
+                foreach (var felt in PlayField.smallList)
                 {
                     
                     if ((felt.name == input) || (felt.shortname == shortinput))
@@ -83,10 +91,10 @@ namespace BearDiceGame
                     else { feil++; }
                 }
 
-                foreach (var felt in PlayField.avalibeList)
+                foreach (var felt in PlayField.smallList)
                 {
                     if (felt.shortname != shortinput) { skrivefeil++; }
-                    if (skrivefeil >= PlayField.avalibeList.Count)
+                    if (skrivefeil >= PlayField.smallList.Count)
                     {
                     Console.SetCursorPosition(0, 22);
                     Console.WriteLine(String.Format("{0, -60}", "Feil skrevet, skriv inn på nytt"));
@@ -103,7 +111,7 @@ namespace BearDiceGame
                     if (terning._diceValue == i) { localsum += terning._diceValue; }
                 }
 
-                foreach (var felt in PlayField.avalibeList)
+                foreach (var felt in PlayField.smallList)
                 {
                     if (felt.validvalue == i && felt.avalibe == true)
                     {
@@ -121,13 +129,13 @@ namespace BearDiceGame
                         break;
                     }
                 }
-                foreach (var felt in PlayField.avalibeList)
+                foreach (var felt in PlayField.smallList)
                 {
                     if ((felt.name == input) || (felt.shortname == shortinput)) { felt.avalibe = false; }
                 }
         }
 
-        public static void PP2()
+        public static void PlayFieldMenu()
         
         {
             var input = Console.ReadKey();
@@ -135,13 +143,29 @@ namespace BearDiceGame
             switch (input.Key) //Switch on Key enum
             {
                 case ConsoleKey.DownArrow:
-                    if (PlayField.menuselect < 5) { PlayField.menuselect++; }
-                    if (PlayField.menuselect > 5) { PlayField.menuselect = 0; }
+                    if (PlayField.menuselect < 15) { PlayField.menuselect++; }
+                    if (PlayField.menuselect >= 15) { PlayField.menuselect = 0; }
                     View.UpdateView();
                     break;
+
                 case ConsoleKey.UpArrow:
-                    if (PlayField.menuselect > 0) { PlayField.menuselect--; }
-                    if (PlayField.menuselect < 0) { PlayField.menuselect = 5; }
+                    if (PlayField.menuselect <= 0) { PlayField.menuselect = 14; }
+                    else if (PlayField.menuselect > 0) { PlayField.menuselect--; }
+                    View.UpdateView();
+                    break;
+
+                case ConsoleKey.Enter:
+                    //if (PlayField.menuselect < 6)
+                    //{
+                    //    PlacePoints(PlayField.smallfields[PlayField.menuselect] + 1);
+                    //    PlayField.fieldchooser = false;
+                    //    View.UpdateView();
+                    //    break;
+                    //}
+
+                  
+                    PlacePoints2(PlayField.menuselect);
+                    PlayField.fieldchooser = false;
                     View.UpdateView();
                     break;
             }
@@ -149,6 +173,7 @@ namespace BearDiceGame
 
         public static void NewRound()
         {
+            PlayField.fieldchooser = true;
             GameBearYatzie.turnCounter--;
             if (GameBearYatzie.turnCounter < 1)
             {
@@ -175,14 +200,14 @@ namespace BearDiceGame
                 Console.WriteLine(String.Format("{0, -60}", "Gratulerer, ganske bra"));
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, 23);
-                foreach (var felt in PlayField.avalibeList)
+                foreach (var felt in PlayField.totalList)
                 {
                     felt.sum = null;
                     felt.avalibe = true;
                     felt.potentialsum = 0;
                 }
                 smallsum = 0;
-                GameBearYatzie.turnCounter = 7;
+                GameBearYatzie.turnCounter = 16;
                 NewRound();
                 
             }
@@ -192,14 +217,14 @@ namespace BearDiceGame
                 Console.WriteLine(String.Format("{0, -60}", "Dette var dårlig, du er et rasshøl!"));
                 Console.Write(new string(' ', Console.WindowWidth));
                 Console.SetCursorPosition(0, 23);
-                foreach (var felt in PlayField.avalibeList)
+                foreach (var felt in PlayField.smallList)
                 {
                     felt.sum = null;
                     felt.avalibe = true;
                     felt.potentialsum = 0;
                 }
                 smallsum = 0;
-                GameBearYatzie.turnCounter = 7;
+                GameBearYatzie.turnCounter = 16;
                 NewRound();
 
             }

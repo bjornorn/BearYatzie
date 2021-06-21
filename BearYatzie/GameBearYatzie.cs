@@ -7,7 +7,7 @@ namespace BearDiceGame
     {
         public static bool GameOn = false;
         public static bool TurnOn = false;
-        public static int turnCounter = 6;
+        public static int turnCounter = 15;
 
         public GameBearYatzie()
         {
@@ -17,6 +17,11 @@ namespace BearDiceGame
             foreach (var felt in PlayField.smallfields)
             {
                 new PlayField(felt, id);
+                id++;
+            }
+            foreach (var felt in PlayField.bigFields)
+            {
+                new PlayField(felt, id, false);
                 id++;
             }
             TurnOn = true;
@@ -30,20 +35,23 @@ namespace BearDiceGame
             Console.CursorVisible = true;
             while (GameOn)
             {
+                //PlayField.bigCalcPotential();
                 while (TurnOn)
                 {
                     GameEngine.TurnController();
+            
                     UpdateView();
+                    
                 }
-                Console.WriteLine("Hvor vil du plassere poengene dine?\n" +
-                                  "Skriv minst 2 av bokstavene på plassering");
-                var input = Console.ReadLine();
-                GameEngine.PlacePoints(input);
+                //Console.WriteLine("Hvor vil du plassere poengene dine?\n" +
+                //                  "Skriv minst 2 av bokstavene på plassering");
+                //var input = Console.ReadLine();
+                //GameEngine.PlacePoints(input);
 
                 //ny "velger"
-                //while (true){ GameEngine.PP2(); }
+                while (PlayField.fieldchooser == true) { GameEngine.PlayFieldMenu(); }
 
-                UpdateView();
+               
                 Console.WriteLine("Trykk en tast for å starte ny runde");
                 GameEngine.NewRound();
             }

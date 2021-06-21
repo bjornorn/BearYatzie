@@ -6,7 +6,7 @@ namespace BearDiceGame
     {
         static void Main(string[] args)
         {
-
+   
             //View.Welcome();
             var newGame = new GameBearYatzie();
             newGame.PlayGame();

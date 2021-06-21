@@ -78,47 +78,67 @@ namespace BearDiceGame
         public static void ScoreField()
         {
             int counter = 1;
+
             Console.WriteLine();
-            Console.WriteLine(String.Format("{0,-10}|{1,-10}| {2,-5} |", "", "Mulige Poeng", "Poeng"));
+            Console.WriteLine(String.Format("{0,-15}|{1,-10}|{2,-5}|", "", "Mulige Poeng", "Poeng"));
+    
+       
             for (var i = 0; i < PlayField.totalList.Count; i++)
             {
                 var felt = PlayField.totalList[i];
                 Console.Write("\r");
-                Console.Write(String.Format("{0,-10}|", felt.name));
+                Console.Write(String.Format("{0,-15}|", felt.name));
 
+          
                 if (felt.sum == null)
                 {
                     if (i == PlayField.menuselect && GameBearYatzie.TurnOn == false)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.Write(String.Format("{0,5}       |", felt.potentialsum));
+                        Console.Write(String.Format("{0,12}", felt.potentialsum));
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
                     else
                     {
-                        Console.Write(String.Format("{0,5}       |", felt.potentialsum));
+                        Console.Write(String.Format("{0,12}", felt.potentialsum));
                     }
                 }
                 else
                 {
-                    Console.Write(String.Format("  {0,2}    |", "Ferdig"));
+                    if (i == PlayField.menuselect && GameBearYatzie.TurnOn == false)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.Write(String.Format("{0,12}", felt.potentialsum));
+                        Console.BackgroundColor = ConsoleColor.Black;
+                    }
+                    else
+                    {
+                        Console.Write(String.Format("{0,12}", "Ferdig"));
+                    }
                 }
-
-
+                
                 if (felt.sum != null)
                 {
-                    Console.Write(String.Format("{0,4}   | {1,4}", felt.sum, "\n"));
+                    Console.Write(String.Format("|{0,5}|{1,4}", felt.sum, "\n"));
                 }
                 else
                 {
-                    Console.Write(String.Format("{0,4}   | {1,4}", "Tom", "\n"));
+                    Console.Write(String.Format("|{0,5}|{1,4}", "Tom", "\n"));
                 }
 
-                counter++;
-            }
+                if (i == 5)
+                {
+                    Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Sum", "", GameEngine.smallsum));
+                    Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Bonus", "", "0"));
+                }
 
-            Console.WriteLine("\n");
-            Console.WriteLine("Total Sum: " + GameEngine.smallsum);
+
+            }
+            Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Totalsum", "", GameEngine.smallsum));
+            //Console.WriteLine("\n");
+
+
+
         }
     }
 }

@@ -8,6 +8,7 @@ namespace BearDiceGame
         public static bool GameOn = false;
         public static bool TurnOn = false;
         public static int turnCounter = 15;
+        public static int players = 2;
 
         public GameBearYatzie()
         {
@@ -23,6 +24,9 @@ namespace BearDiceGame
             {
                 new PlayField(felt, id, false);
                 id++;
+
+                Player Bjørn = new Player("Bjørn");
+                Player Andre = new Player("Andre");
             }
             TurnOn = true;
         }
@@ -36,12 +40,16 @@ namespace BearDiceGame
             while (GameOn)
             {
                 //PlayField.bigCalcPotential();
-                while (TurnOn)
-                {
-                    GameEngine.TurnController();
+              
+                    foreach (var player in Player.PlayerList)
+                    {
+                    while (TurnOn)
+                    {
+
+                        GameEngine.TurnController();
             
-                    UpdateView();
-                    
+                        UpdateView();
+                    }
                 }
                 //Console.WriteLine("Hvor vil du plassere poengene dine?\n" +
                 //                  "Skriv minst 2 av bokstavene på plassering");

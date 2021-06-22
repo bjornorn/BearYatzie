@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace BearDiceGame
     {
         public static int rollCounter = 3;
         public static int turns = 14;
-        public static int smallsum = 0;
+        public static int smallsum = 0; 
+      
 
 
         public static void TurnController()
@@ -136,15 +138,16 @@ namespace BearDiceGame
         }
 
         public static void PlayFieldMenu()
-        
+
         {
             var input = Console.ReadKey();
 
             switch (input.Key) //Switch on Key enum
             {
                 case ConsoleKey.DownArrow:
-                    if (PlayField.menuselect < 15) { PlayField.menuselect++; }
-                    if (PlayField.menuselect >= 15) { PlayField.menuselect = 0; }
+              
+                    if (PlayField.menuselect < 14) { PlayField.menuselect++; }
+                    else if (PlayField.menuselect >= 14) { PlayField.menuselect = 0;}
                     View.UpdateView();
                     break;
 
@@ -155,15 +158,7 @@ namespace BearDiceGame
                     break;
 
                 case ConsoleKey.Enter:
-                    //if (PlayField.menuselect < 6)
-                    //{
-                    //    PlacePoints(PlayField.smallfields[PlayField.menuselect] + 1);
-                    //    PlayField.fieldchooser = false;
-                    //    View.UpdateView();
-                    //    break;
-                    //}
-
-                  
+                 
                     PlacePoints2(PlayField.menuselect);
                     PlayField.fieldchooser = false;
                     View.UpdateView();

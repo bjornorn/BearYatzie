@@ -24,7 +24,9 @@ namespace BearDiceGame
         public static string Bonus = "Bonus";
         public static string[] bigFields = { "1 Par", "2 Par", "3 like", "4 like", "Liten Straight", "Stor Straight", "Hus", "Sjanse", "Yatzy" };
         public static string totalsum = "Totalsum";
-        public static int menuselect = 0;
+        public static int menuselect { get; set; }
+        
+
         public static bool fieldchooser = true;
         
 
@@ -39,6 +41,7 @@ namespace BearDiceGame
             validvalue = i;
             this.avalibe = true;
             this.potentialsum = 0;
+            sum = null;
             this.smallfield = true;
             smallList.Add(this);
             totalList.Add(this);
@@ -47,12 +50,13 @@ namespace BearDiceGame
         {
             this.name = name;
             shortname = name.Substring(0, 2);
-            //validvalue = i;
+            validvalue = i;
             this.avalibe = true;
             this.potentialsum = 0;
             this.smallfield = smallfield;
             bigList.Add(this);
             totalList.Add(this);
+            sum = null;
         }
 
         public int smallCalcPotential(int i)

@@ -24,10 +24,9 @@ namespace BearDiceGame
             {
                 new PlayField(felt, id, false);
                 id++;
-
-                Player Bjørn = new Player("Bjørn");
-                Player Andre = new Player("Andre");
             }
+            Player Bjørn = new Player("Bjørn");
+            Player Andre = new Player("Andre");
             TurnOn = true;
         }
         public void UpdateView()
@@ -41,16 +40,14 @@ namespace BearDiceGame
             {
                 //PlayField.bigCalcPotential();
               
-                    foreach (var player in Player.PlayerList)
-                    {
+                
                     while (TurnOn)
                     {
-
                         GameEngine.TurnController();
             
                         UpdateView();
                     }
-                }
+                
                 //Console.WriteLine("Hvor vil du plassere poengene dine?\n" +
                 //                  "Skriv minst 2 av bokstavene på plassering");
                 //var input = Console.ReadLine();

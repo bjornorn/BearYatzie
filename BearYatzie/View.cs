@@ -80,76 +80,88 @@ namespace BearDiceGame
 
         public static void ScoreField()
         {
-            int counter = 1;
+            int counter = 0;
 
             Console.WriteLine();
             Console.WriteLine(String.Format("{0,-15}|{1,-5}|", "", "Poeng"));
-
+           
 
             for (var i = 0; i < PlayField.totalList.Count; i++)
             {
                 var felt = PlayField.totalList[i];
                 Console.Write("\r");
                 Console.Write(String.Format("{0,-15}|", felt.name));
-  
-
-                if (GameBearYatzie.TurnOn == true)
+            
+            foreach (var spiller in Player.PlayerList)
                 {
-                    if (felt.sum != null)
+                    //Console.Write(spiller.name);
+                    PlayerScoreView(felt, i, spiller);
+                    counter++;
+                    if (counter == Player.PlayerList.Count)
                     {
-                        Console.Write(String.Format("{0,6}", felt.sum));
+                        Console.Write("\n");
+                        counter = 0;
 
                     }
-
-                    if (felt.sum == null)
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.Write(String.Format("{0,6}", felt.potentialsum));
-                        Console.BackgroundColor = ConsoleColor.Black;
-
-                    }
+                    //Console.SetCursorPosition(6 * i,0);
                     //Console.Write("\n");
                 }
-
-                if (GameBearYatzie.TurnOn == false)
-                {
-                    if (i != PlayField.menuselect && felt.sum != null)
-                    {
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(String.Format("{0,6}", felt.sum));
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
-
-                    }
-
-                    if (i != PlayField.menuselect && felt.sum == null)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(String.Format("{0,6}", felt.potentialsum));
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                    }
-
-                    if (i == PlayField.menuselect)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.Write(String.Format("{0,6}", felt.potentialsum));
-                        //Console.Write("\n");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
-                    }
-                }
-
-                Console.Write("\n");
-
-
+                //PlayerScoreView(felt, i);
             }
 
             Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Totalsum", "", GameEngine.smallsum));
+        }
+
+        private static void PlayerScoreView(PlayField felt, int i, Player spiller)
+        {
+            if (GameBearYatzie.TurnOn == true)
+            {
+                if (felt.sum != null)
+                {
+                    Console.Write(String.Format("{0,6}", felt.sum)); 
+                }
+
+                if (felt.sum == null)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    Console.Write(String.Format("{0,6}", felt.potentialsum));
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+                //Console.Write("\n");
+            }
+
+            if (GameBearYatzie.TurnOn == false)
+            {
+                if (i != PlayField.menuselect && felt.sum != null)
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(String.Format("{0,6}", felt.sum));
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+
+                if (i != PlayField.menuselect && felt.sum == null)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(String.Format("{0,6}", felt.potentialsum));
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
+                if (i == PlayField.menuselect)
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(String.Format("{0,6}", felt.potentialsum));
+                    //Console.Write("\n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+            }
+
+            
         }
         //if (i == 5)
         //{

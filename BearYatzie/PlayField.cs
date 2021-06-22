@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BearDiceGame
 {
-    class PlayField
+    public class PlayField
     {
         public bool avalibe { get; set; }
         public int? sum { get; set; }
@@ -69,7 +69,7 @@ namespace BearDiceGame
             return potentialsum;
         }
 
-        public static void bigCalcPotential()
+        public static void bigCalcPotential(Player aktivspiller)
         {
             foreach (var storfelt in PlayField.bigList)
             {
@@ -105,7 +105,7 @@ namespace BearDiceGame
                 //1 Par
                 if (foundOnePair == false && (terningArray[terningNummer]) > 1)
                 {
-                    PlayField.totalList[6].potentialsum = terningverdi * 2;
+                    aktivspiller.playerscore[6].potentialsum = terningverdi * 2;
                     foundOnePair = true;
                 }
                 //2 Par
@@ -121,19 +121,19 @@ namespace BearDiceGame
                     }
                     if (twoPairCounter > 1)
                     {
-                        PlayField.totalList[7].potentialsum = twopairvalue;
+                        aktivspiller.playerscore[7].potentialsum = twopairvalue;
                     }
                 }
                 //3 Like
                 if ((found3equal == false) && (terningArray[terningNummer] > 2))
                 {
-                    PlayField.totalList[8].potentialsum = terningverdi * 3;
+                    aktivspiller.playerscore[8].potentialsum = terningverdi * 3;
                     found3equal = true;
                 }
                 //4 Like
                 if ((found4equal == false) && (terningArray[terningNummer] > 3))
                 {
-                    PlayField.totalList[9].potentialsum = terningverdi * 4;
+                    aktivspiller.playerscore[9].potentialsum = terningverdi * 4;
                     found4equal = true;
                 }
              
@@ -146,7 +146,7 @@ namespace BearDiceGame
 
                     if (LStraightCount > 4)
                     {
-                        PlayField.totalList[10].potentialsum = 15;
+                        aktivspiller.playerscore[10].potentialsum = 15;
                     }
                 //Stor straight
             
@@ -157,7 +157,7 @@ namespace BearDiceGame
 
                     if (SStraightCount > 4)
                     {
-                        PlayField.totalList[11].potentialsum = 20;
+                        aktivspiller.playerscore[11].potentialsum = 20;
                     }
 
                 //Hus
@@ -184,16 +184,16 @@ namespace BearDiceGame
 
                         if (houseCounter > 1)
                         {
-                            PlayField.totalList[12].potentialsum = HouseSum;
+                            aktivspiller.playerscore[12].potentialsum = HouseSum;
                         }
                     }
                 }
                 //Sjanse
-                PlayField.totalList[13].potentialsum += (terningArray[terningNummer] * terningverdi);
+                aktivspiller.playerscore[13].potentialsum += (terningArray[terningNummer] * terningverdi);
                 //Yatzie
                 if (terningArray[terningNummer] > 4)
                 {
-                    PlayField.totalList[14].potentialsum = (terningverdi * 5) + 50;
+                    aktivspiller.playerscore[14].potentialsum = (terningverdi * 5) + 50;
                 }
             }
         }

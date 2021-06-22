@@ -14,6 +14,9 @@ namespace BearDiceGame
         {
             GameOn = true;
             for (int i = 0; i < 5; i++) new Dice(i);
+           
+           
+
             int id = 1;
             foreach (var felt in PlayField.smallfields)
             {
@@ -25,40 +28,35 @@ namespace BearDiceGame
                 new PlayField(felt, id, false);
                 id++;
             }
+
             Player Bjørn = new Player("Bjørn");
             Player Andre = new Player("Andre");
+
+
             TurnOn = true;
         }
-        public void UpdateView()
-        {
-            View.UpdateView();
-        }
+        //public void UpdateView(Player aktivspiller)
+        //{
+        //    View.UpdateView(aktivspiller);
+        //}
         public void PlayGame() {
-            UpdateView();
+            View.UpdateView(Player.PlayerList[0]);
             Console.CursorVisible = true;
             while (GameOn)
             {
-                //PlayField.bigCalcPotential();
-              
-                
+                foreach (var aktivspiller in Player.PlayerList)
+                {
                     while (TurnOn)
-                    {
-                        GameEngine.TurnController();
+                    { GameEngine.TurnController(aktivspiller);
             
-                        UpdateView();
+                      View.UpdateView(aktivspiller);
                     }
-                
-                //Console.WriteLine("Hvor vil du plassere poengene dine?\n" +
-                //                  "Skriv minst 2 av bokstavene på plassering");
-                //var input = Console.ReadLine();
-                //GameEngine.PlacePoints(input);
 
-                //ny "velger"
-                while (PlayField.fieldchooser == true) { GameEngine.PlayFieldMenu(); }
+                    while (PlayField.fieldchooser == true) { GameEngine.PlayFieldMenu(aktivspiller); }
 
-               
-                Console.WriteLine("Trykk en tast for å starte ny runde");
-                GameEngine.NewRound();
+                    Console.WriteLine("Trykk en tast for å starte ny runde");
+                    GameEngine.NewRound();
+                }
             }
         }
     }

@@ -15,14 +15,14 @@ namespace BearDiceGame
       
 
 
-        public static void TurnController()
+        public static void TurnController(Player aktivspiller)
         {
             var input = Console.ReadKey();
 
                 switch (input.Key) //Switch on Key enum
                 {
                     case ConsoleKey.R:
-                       ThrowAndCheck();
+                       ThrowAndCheck(aktivspiller);
                         break;
                     case ConsoleKey.D1:
                         Dice.LockDice(0);
@@ -41,7 +41,7 @@ namespace BearDiceGame
                         break;
                 }
         }
-        public static void ThrowAndCheck()
+        public static void ThrowAndCheck(Player aktivspiller)
         {
             var beep = 100;
             rollCounter--;
@@ -54,12 +54,12 @@ namespace BearDiceGame
                     beep += 100;
                 }
             }
-            foreach (var felt in PlayField.smallList)
+            foreach (var felt in aktivspiller.playerscore)
             {
                 felt.smallCalcPotential(felt.validvalue);
             }
 
-            PlayField.bigCalcPotential();
+            PlayField.bigCalcPotential(aktivspiller);
 
             if (rollCounter < 1)
             {
@@ -67,9 +67,11 @@ namespace BearDiceGame
             }
         }
 
-        public static void PlacePoints2(int fieldNo)
+        public static void PlacePoints2(int fieldNo, Player aktivspiller)
         {
             PlayField.totalList[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
+            aktivspiller.playerscore[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
+            
         }
         public static void PlacePoints(string input)
         {
@@ -137,7 +139,7 @@ namespace BearDiceGame
                 }
         }
 
-        public static void PlayFieldMenu()
+        public static void PlayFieldMenu(Player aktivspiller)
 
         {
             var input = Console.ReadKey();
@@ -148,20 +150,20 @@ namespace BearDiceGame
               
                     if (PlayField.menuselect < 14) { PlayField.menuselect++; }
                     else if (PlayField.menuselect >= 14) { PlayField.menuselect = 0;}
-                    View.UpdateView();
+                    View.UpdateView(aktivspiller);
                     break;
 
                 case ConsoleKey.UpArrow:
                     if (PlayField.menuselect <= 0) { PlayField.menuselect = 14; }
                     else if (PlayField.menuselect > 0) { PlayField.menuselect--; }
-                    View.UpdateView();
+                    View.UpdateView(aktivspiller);
                     break;
 
                 case ConsoleKey.Enter:
                  
-                    PlacePoints2(PlayField.menuselect);
+                    PlacePoints2(PlayField.menuselect, aktivspiller);
                     PlayField.fieldchooser = false;
-                    View.UpdateView();
+                    View.UpdateView(aktivspiller);
                     break;
             }
         }

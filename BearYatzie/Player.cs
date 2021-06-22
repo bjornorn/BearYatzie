@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace BearDiceGame
 {
-    class Player
+    public class Player
     {
         public int playerTurns { get; set; }
         public string name { get; set; }
+
+        //public List<PlayerField> playerScore = new List<PlayField>();
+        public List<PlayField> playerscore = new List<PlayField>();
 
         public static List<Player> PlayerList = new List<Player>();
 
@@ -17,6 +20,11 @@ namespace BearDiceGame
         {
             this.playerTurns = 3;
             this.name = name;
+            
+            foreach (var field in PlayField.totalList)
+            {
+                playerscore.Add(field);
+            }
             PlayerList.Add(this);
         }
     }

@@ -103,7 +103,7 @@ namespace BearDiceGame
                 //1 Par
                 if (foundOnePair == false && (terningArray[terningNummer]) > 1)
                 {
-                    aktivspiller.playerscore[6].potentialsum = terningverdi * 2;
+                    PlayField.totalList[6].potentialsum = terningverdi * 2;
                     foundOnePair = true;
                 }
                 //2 Par
@@ -119,19 +119,19 @@ namespace BearDiceGame
                     }
                     if (twoPairCounter > 1)
                     {
-                        aktivspiller.playerscore[7].potentialsum = twopairvalue;
+                        PlayField.totalList[7].potentialsum = twopairvalue;
                     }
                 }
                 //3 Like
                 if ((found3equal == false) && (terningArray[terningNummer] > 2))
                 {
-                    aktivspiller.playerscore[8].potentialsum = terningverdi * 3;
+                    PlayField.totalList[8].potentialsum = terningverdi * 3;
                     found3equal = true;
                 }
                 //4 Like
                 if ((found4equal == false) && (terningArray[terningNummer] > 3))
                 {
-                    aktivspiller.playerscore[9].potentialsum = terningverdi * 4;
+                    PlayField.totalList[9].potentialsum = terningverdi * 4;
                     found4equal = true;
                 }
              
@@ -144,7 +144,7 @@ namespace BearDiceGame
 
                     if (LStraightCount > 4)
                     {
-                        aktivspiller.playerscore[10].potentialsum = 15;
+                        PlayField.totalList[10].potentialsum = 15;
                     }
                 //Stor straight
             
@@ -155,7 +155,7 @@ namespace BearDiceGame
 
                     if (SStraightCount > 4)
                     {
-                        aktivspiller.playerscore[11].potentialsum = 20;
+                        PlayField.totalList[11].potentialsum = 20;
                     }
 
                 //Hus
@@ -182,16 +182,16 @@ namespace BearDiceGame
 
                         if (houseCounter > 1)
                         {
-                            aktivspiller.playerscore[12].potentialsum = HouseSum;
+                            PlayField.totalList[12].potentialsum = HouseSum;
                         }
                     }
                 }
                 //Sjanse
-                aktivspiller.playerscore[13].potentialsum += (terningArray[terningNummer] * terningverdi);
+                PlayField.totalList[13].potentialsum += (terningArray[terningNummer] * terningverdi);
                 //Yatzie
                 if (terningArray[terningNummer] > 4)
                 {
-                    aktivspiller.playerscore[14].potentialsum = (terningverdi * 5) + 50;
+                    PlayField.totalList[14].potentialsum = (terningverdi * 5) + 50;
                 }
             }
         }

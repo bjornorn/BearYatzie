@@ -54,7 +54,7 @@ namespace BearDiceGame
                     //beep += 100;
                 }
             }
-            foreach (var felt in aktivspiller.playerscore)
+            foreach (var felt in PlayField.totalList)
             {
                 
                 felt.potentialsum = felt.smallCalcPotential(felt.validvalue);
@@ -68,74 +68,74 @@ namespace BearDiceGame
         public static void PlacePoints2(int fieldNo, Player aktivspiller)
         {
             //PlayField.totalList[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
-            aktivspiller.playerscore[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
+            aktivspiller.playerscore[fieldNo] = PlayField.totalList[fieldNo].potentialsum;
             
         }
-        public static void PlacePoints(string input)
-        {
-            input = input.Length >= 2 ? input : "xx";
-            input.ToCharArray();
-            input = (char.ToUpper(input[0]) + input.Substring(1));
-            input.ToString();
+        //public static void PlacePoints(string input)
+        //{
+        //    input = input.Length >= 2 ? input : "xx";
+        //    input.ToCharArray();
+        //    input = (char.ToUpper(input[0]) + input.Substring(1));
+        //    input.ToString();
 
-            string shortinput = input.Length >= 2 ? input.Substring(0, 2) : "xx";
-            int feil = 0;
-            int skrivefeil = 0;
-            int localsum = 0;
-            int i = 0;
-                foreach (var felt in PlayField.smallList)
-                {
+        //    string shortinput = input.Length >= 2 ? input.Substring(0, 2) : "xx";
+        //    int feil = 0;
+        //    int skrivefeil = 0;
+        //    int localsum = 0;
+        //    int i = 0;
+        //        foreach (var felt in PlayField.smallList)
+        //        {
                     
-                    if ((felt.name == input) || (felt.shortname == shortinput))
-                    {
-                        i = felt.validvalue;
-                    }
-                    else { feil++; }
-                }
+        //            if ((felt.name == input) || (felt.shortname == shortinput))
+        //            {
+        //                i = felt.validvalue;
+        //            }
+        //            else { feil++; }
+        //        }
 
-                foreach (var felt in PlayField.smallList)
-                {
-                    if (felt.shortname != shortinput) { skrivefeil++; }
-                    if (skrivefeil >= PlayField.smallList.Count)
-                    {
-                    Console.SetCursorPosition(0, 22);
-                    Console.WriteLine(String.Format("{0, -60}", "Feil skrevet, skriv inn på nytt"));
-                    Console.Write(new string(' ', Console.WindowWidth));
-                    Console.SetCursorPosition(0, 23);
-                    string nytt = Console.ReadLine();
-                    PlacePoints(nytt);
-                    break;
-                    }
-                }
+        //        foreach (var felt in PlayField.smallList)
+        //        {
+        //            if (felt.shortname != shortinput) { skrivefeil++; }
+        //            if (skrivefeil >= PlayField.smallList.Count)
+        //            {
+        //            Console.SetCursorPosition(0, 22);
+        //            Console.WriteLine(String.Format("{0, -60}", "Feil skrevet, skriv inn på nytt"));
+        //            Console.Write(new string(' ', Console.WindowWidth));
+        //            Console.SetCursorPosition(0, 23);
+        //            string nytt = Console.ReadLine();
+        //            PlacePoints(nytt);
+        //            break;
+        //            }
+        //        }
 
-                foreach (var terning in Dice.DiceList)
-                {
-                    if (terning._diceValue == i) { localsum += terning._diceValue; }
-                }
+        //        foreach (var terning in Dice.DiceList)
+        //        {
+        //            if (terning._diceValue == i) { localsum += terning._diceValue; }
+        //        }
 
-                foreach (var felt in PlayField.smallList)
-                {
-                    if (felt.validvalue == i && felt.avalibe == true)
-                    {
-                        felt.sum = localsum;
-                        GameEngine.smallsum += localsum;
-                    }
-                    else if (felt.validvalue == i && felt.avalibe == false)
-                    {
-                        Console.SetCursorPosition(0, 22);
-                        Console.WriteLine(String.Format("{0, -60}", "Feltet er brukt fra før, skriv inn annet felt"));
-                        Console.Write(new string(' ', Console.WindowWidth));
-                        Console.SetCursorPosition(0, 23);
-                        string gammel = Console.ReadLine();
-                        PlacePoints(gammel);
-                        break;
-                    }
-                }
-                foreach (var felt in PlayField.smallList)
-                {
-                    if ((felt.name == input) || (felt.shortname == shortinput)) { felt.avalibe = false; }
-                }
-        }
+        //        foreach (var felt in PlayField.smallList)
+        //        {
+        //            if (felt.validvalue == i && felt.avalibe == true)
+        //            {
+        //                felt.sum = localsum;
+        //                GameEngine.smallsum += localsum;
+        //            }
+        //            else if (felt.validvalue == i && felt.avalibe == false)
+        //            {
+        //                Console.SetCursorPosition(0, 22);
+        //                Console.WriteLine(String.Format("{0, -60}", "Feltet er brukt fra før, skriv inn annet felt"));
+        //                Console.Write(new string(' ', Console.WindowWidth));
+        //                Console.SetCursorPosition(0, 23);
+        //                string gammel = Console.ReadLine();
+        //                PlacePoints(gammel);
+        //                break;
+        //            }
+        //        }
+        //        foreach (var felt in PlayField.smallList)
+        //        {
+        //            if ((felt.name == input) || (felt.shortname == shortinput)) { felt.avalibe = false; }
+        //        }
+        //}
 
         public static void PlayFieldMenu(Player aktivspiller)
 
@@ -170,6 +170,7 @@ namespace BearDiceGame
         public static void NewRound()
         {
             PlayField.fieldchooser = true;
+         
             GameBearYatzie.turnCounter--;
             if (GameBearYatzie.turnCounter < 1)
             {
@@ -184,7 +185,11 @@ namespace BearDiceGame
                     terning._diceValue = 0;
                 }
 
-                GameBearYatzie.TurnOn = true;
+                foreach (var field in PlayField.totalList)
+                {
+                    field.potentialsum = 0;
+                }
+                    GameBearYatzie.TurnOn = true;
             }
         }
 

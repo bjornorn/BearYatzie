@@ -31,6 +31,7 @@ namespace BearDiceGame
 
             Player Bjørn = new Player("Bjørn");
             Player Andre = new Player("Andre");
+            Player Eilert = new Player("Eilert");
 
 
             TurnOn = true;

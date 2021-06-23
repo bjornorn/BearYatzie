@@ -12,9 +12,11 @@ namespace BearDiceGame
         public string name { get; set; }
 
         //public List<PlayerField> playerScore = new List<PlayField>();
-        public List<PlayField> playerscore = new List<PlayField>();
+        //public List<PlayField> playerscore = new List<PlayField>();
+        public List<int?> playerscore = new List<int?>();
 
         public static List<Player> PlayerList = new List<Player>();
+        
 
         public Player(string name)
         {
@@ -23,7 +25,7 @@ namespace BearDiceGame
             
             foreach (var field in PlayField.totalList)
             {
-                playerscore.Add(field);
+                playerscore.Add(field.sum);
             }
             PlayerList.Add(this);
         }

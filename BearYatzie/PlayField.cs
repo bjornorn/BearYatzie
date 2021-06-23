@@ -25,8 +25,6 @@ namespace BearDiceGame
         public static string[] bigFields = { "1 Par", "2 Par", "3 like", "4 like", "Liten Straight", "Stor Straight", "Hus", "Sjanse", "Yatzy" };
         public static string totalsum = "Totalsum";
         public static int menuselect { get; set; }
-        
-
         public static bool fieldchooser = true;
         
 

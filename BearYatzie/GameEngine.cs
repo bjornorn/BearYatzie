@@ -50,26 +50,24 @@ namespace BearDiceGame
                 if (terning.diceIsLocked == false)
                 {
                     terning.DiceRoll();
-                    Console.Beep(beep, 250);
-                    beep += 100;
+                    //Console.Beep(beep, 250);
+                    //beep += 100;
                 }
             }
             foreach (var felt in aktivspiller.playerscore)
             {
-                felt.smallCalcPotential(felt.validvalue);
+                
+                felt.potentialsum = felt.smallCalcPotential(felt.validvalue);
             }
 
             PlayField.bigCalcPotential(aktivspiller);
 
-            if (rollCounter < 1)
-            {
-                GameBearYatzie.TurnOn = false;
-            }
+       
         }
 
         public static void PlacePoints2(int fieldNo, Player aktivspiller)
         {
-            PlayField.totalList[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
+            //PlayField.totalList[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
             aktivspiller.playerscore[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
             
         }
@@ -160,10 +158,11 @@ namespace BearDiceGame
                     break;
 
                 case ConsoleKey.Enter:
-                 
                     PlacePoints2(PlayField.menuselect, aktivspiller);
+                   
                     PlayField.fieldchooser = false;
                     View.UpdateView(aktivspiller);
+
                     break;
             }
         }

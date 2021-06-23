@@ -50,11 +50,15 @@ namespace BearDiceGame
                     { GameEngine.TurnController(aktivspiller);
             
                       View.UpdateView(aktivspiller);
+                      if (GameEngine.rollCounter < 1)
+                      {
+                          GameBearYatzie.TurnOn = false;
+                      }
                     }
 
                     while (PlayField.fieldchooser == true) { GameEngine.PlayFieldMenu(aktivspiller); }
 
-                    Console.WriteLine("Trykk en tast for å starte ny runde");
+                    Console.WriteLine(aktivspiller.name + " Trykk en tast for å starte ny runde");
                     GameEngine.NewRound();
                 }
             }

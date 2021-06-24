@@ -81,23 +81,19 @@ namespace BearDiceGame
 
         public static void ScoreField(Player aktivspiller)
         {
-            
-
-            Console.WriteLine(aktivspiller.name + " sin tur");
-            Console.WriteLine(String.Format("{0,-15}|{1,-5}|", "", "Poeng"));
-
-            //foreach (var felt in PlayField.totalList)
-            for (var i = 0; i < PlayField.totalList.Count; i++)
+            Console.Write(String.Format("{0,-15}|", ""));
+            foreach (var spiller in Player.PlayerList)
             {
+                Console.Write(String.Format("{0,-8}|",spiller.name));
+            }
+
+            for (var i = 0; i < PlayField.totalList.Count; i++) {
                 
                 Console.Write("\r\n");
                 Console.Write(String.Format("{0,-15}|", PlayField.totalList[i].name));
-
                 PlayerScoreView(i, aktivspiller);
-       
             }
 
-            Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Totalsum", "", GameEngine.smallsum));
         }
 
         private static void PlayerScoreView(int i, Player aktivspiller)
@@ -119,11 +115,24 @@ namespace BearDiceGame
 
                         if (spiller.playerscore[i] == null)
                         {
-                            Console.Write(String.Format("{0,6}", PlayField.totalList[i].potentialsum));
+                            if (PlayField.totalList[i].potentialsum == 0)
+                            {
+                                Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            
                         }
                         else if (spiller.playerscore[i] != null)
                         {
-                            Console.Write(String.Format("{0,6}", spiller.playerscore[i]));
+                        
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.ForegroundColor = ConsoleColor.White;
                         }
 
                     }
@@ -132,11 +141,13 @@ namespace BearDiceGame
 
                         if (spiller.playerscore[i] == null)
                         {
-                            Console.Write(String.Format("{0,6}", "0"));
+                            Console.Write(String.Format("{0,8}|", "0"));
                         }
                         else if (spiller.playerscore[i] != null)
                         {
-                            Console.Write(String.Format("{0,6}", spiller.playerscore[i]));
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.ForegroundColor = ConsoleColor.White;
                         }
 
                     }
@@ -148,41 +159,42 @@ namespace BearDiceGame
                     {
                         if (i == PlayField.menuselect && spiller.playerscore[i] == null)
                         {
-                            Console.BackgroundColor = ConsoleColor.White;
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(String.Format("{0,6}", PlayField.totalList[i].potentialsum));
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.BackgroundColor = ConsoleColor.Black;
-                        
                         }
 
                         else if (i == PlayField.menuselect && spiller.playerscore[i] != null)
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.Write(String.Format("{0,6}", spiller.playerscore[i]));
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.BackgroundColor = ConsoleColor.Black;
-
                         }
 
                         else if (i != PlayField.menuselect && spiller.playerscore[i] == null)
                         {
-                            //Console.BackgroundColor = ConsoleColor.Black;
-                            //Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,6}", PlayField.totalList[i].potentialsum));
-                            //Console.BackgroundColor = ConsoleColor.Black;
-                            //Console.ForegroundColor = ConsoleColor.White;
+                            if (PlayField.totalList[i].potentialsum == 0)
+                            {
+                                Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
 
                         }
 
                         else if (i != PlayField.menuselect && spiller.playerscore[i] != null)
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
+                          
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,6}", spiller.playerscore[i]));
+                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.BackgroundColor = ConsoleColor.Black;
+                          
                         }
 
                      
@@ -192,38 +204,26 @@ namespace BearDiceGame
                     {
                         if ((i == PlayField.menuselect) && (spiller.playerscore[i] == null))
                         {
-                            //Console.BackgroundColor = ConsoleColor.White;
-                            //Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,6}", "0"));
-                            //Console.ForegroundColor = ConsoleColor.White;
-                            //Console.BackgroundColor = ConsoleColor.Black;
+                          
+                            Console.Write(String.Format("{0,8}|", "0"));
+                         
                         }
 
                         else if (i == PlayField.menuselect && spiller.playerscore[i] != null)
                         {
-                            //Console.BackgroundColor = ConsoleColor.Gray;
-                            //Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,6}", spiller.playerscore[i]));
-                            //Console.ForegroundColor = ConsoleColor.White;
-                            //Console.BackgroundColor = ConsoleColor.Black;
+                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
                         }
 
                         else if (i != PlayField.menuselect && spiller.playerscore[i] == null)
                         {
-                            //Console.BackgroundColor = ConsoleColor.Black;
-                            //Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,6}", "0"));
-                            //Console.BackgroundColor = ConsoleColor.Black;
-                            //Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write(String.Format("{0,8}|", "0"));
                         }
 
                         else if (i != PlayField.menuselect && spiller.playerscore[i] != null)
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,6}", spiller.playerscore[i]));
+                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
-                            Console.BackgroundColor = ConsoleColor.Black;
                         }
                     }
                     

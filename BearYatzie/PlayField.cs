@@ -20,10 +20,10 @@ namespace BearDiceGame
         public bool meetsRequirements = false;
 
         public static string[] smallfields = { "Enere", "Toere", "Treere", "Firere", "Femmere", "Seksere" };
-        public static string sumstring = "Sum";
-        public static string Bonus = "Bonus";
-        public static string[] bigFields = { "1 Par", "2 Par", "3 like", "4 like", "Liten Straight", "Stor Straight", "Hus", "Sjanse", "Yatzy" };
-        public static string totalsum = "Totalsum";
+        //public static string sumstring = "Sum";
+        //public static string Bonus = ;
+        public static string[] bigFields = { "Sum", "Bonus", "1 Par", "2 Par", "3 like", "4 like", "Liten Straight", "Stor Straight", "Hus", "Sjanse", "Yatzy", "Totalsum" };
+        //public static string totalsum = ;
         public static int menuselect { get; set; }
         public static bool fieldchooser = true;
         
@@ -88,6 +88,7 @@ namespace BearDiceGame
 
 
 
+
             foreach (var terning in Dice.DiceList)
             {
                 int i = terning._diceValue - 1;
@@ -103,7 +104,7 @@ namespace BearDiceGame
                 //1 Par
                 if (foundOnePair == false && (terningArray[terningNummer]) > 1)
                 {
-                    PlayField.totalList[6].potentialsum = terningverdi * 2;
+                    PlayField.totalList[8].potentialsum = terningverdi * 2;
                     foundOnePair = true;
                 }
                 //2 Par
@@ -119,19 +120,19 @@ namespace BearDiceGame
                     }
                     if (twoPairCounter > 1)
                     {
-                        PlayField.totalList[7].potentialsum = twopairvalue;
+                        PlayField.totalList[9].potentialsum = twopairvalue;
                     }
                 }
                 //3 Like
                 if ((found3equal == false) && (terningArray[terningNummer] > 2))
                 {
-                    PlayField.totalList[8].potentialsum = terningverdi * 3;
+                    PlayField.totalList[10].potentialsum = terningverdi * 3;
                     found3equal = true;
                 }
                 //4 Like
                 if ((found4equal == false) && (terningArray[terningNummer] > 3))
                 {
-                    PlayField.totalList[9].potentialsum = terningverdi * 4;
+                    PlayField.totalList[11].potentialsum = terningverdi * 4;
                     found4equal = true;
                 }
              
@@ -144,7 +145,7 @@ namespace BearDiceGame
 
                     if (LStraightCount > 4)
                     {
-                        PlayField.totalList[10].potentialsum = 15;
+                        PlayField.totalList[12].potentialsum = 15;
                     }
                 //Stor straight
             
@@ -155,7 +156,7 @@ namespace BearDiceGame
 
                     if (SStraightCount > 4)
                     {
-                        PlayField.totalList[11].potentialsum = 20;
+                        PlayField.totalList[13].potentialsum = 20;
                     }
 
                 //Hus
@@ -182,16 +183,16 @@ namespace BearDiceGame
 
                         if (houseCounter > 1)
                         {
-                            PlayField.totalList[12].potentialsum = HouseSum;
+                            PlayField.totalList[14].potentialsum = HouseSum;
                         }
                     }
                 }
                 //Sjanse
-                PlayField.totalList[13].potentialsum += (terningArray[terningNummer] * terningverdi);
+                PlayField.totalList[15].potentialsum += (terningArray[terningNummer] * terningverdi);
                 //Yatzie
                 if (terningArray[terningNummer] > 4)
                 {
-                    PlayField.totalList[14].potentialsum = (terningverdi * 5) + 50;
+                    PlayField.totalList[16].potentialsum = (terningverdi * 5) + 50;
                 }
             }
         }

@@ -67,75 +67,25 @@ namespace BearDiceGame
 
         public static void PlacePoints2(int fieldNo, Player aktivspiller)
         {
-            //PlayField.totalList[fieldNo].sum = PlayField.totalList[fieldNo].potentialsum;
+            //sett poeng i felt
             aktivspiller.playerscore[fieldNo] = PlayField.totalList[fieldNo].potentialsum;
-            
+            //fjern nullable
+            aktivspiller.playerscore[6] ??= 0;
+            aktivspiller.playerscore[17] ??= 0;
+            //sum
+            if (fieldNo < 6)
+            {
+                aktivspiller.playerscore[6] = (aktivspiller.playerscore[6] + aktivspiller.playerscore[fieldNo]);
+            }
+            //bonus
+            if (aktivspiller.playerscore[6] > 62)
+            {
+                aktivspiller.playerscore[7] = 50;
+            }           
+            //totalsum
+            aktivspiller.playerscore[17] = aktivspiller.playerscore[17] + aktivspiller.playerscore[fieldNo];
+
         }
-        //public static void PlacePoints(string input)
-        //{
-        //    input = input.Length >= 2 ? input : "xx";
-        //    input.ToCharArray();
-        //    input = (char.ToUpper(input[0]) + input.Substring(1));
-        //    input.ToString();
-
-        //    string shortinput = input.Length >= 2 ? input.Substring(0, 2) : "xx";
-        //    int feil = 0;
-        //    int skrivefeil = 0;
-        //    int localsum = 0;
-        //    int i = 0;
-        //        foreach (var felt in PlayField.smallList)
-        //        {
-                    
-        //            if ((felt.name == input) || (felt.shortname == shortinput))
-        //            {
-        //                i = felt.validvalue;
-        //            }
-        //            else { feil++; }
-        //        }
-
-        //        foreach (var felt in PlayField.smallList)
-        //        {
-        //            if (felt.shortname != shortinput) { skrivefeil++; }
-        //            if (skrivefeil >= PlayField.smallList.Count)
-        //            {
-        //            Console.SetCursorPosition(0, 22);
-        //            Console.WriteLine(String.Format("{0, -60}", "Feil skrevet, skriv inn på nytt"));
-        //            Console.Write(new string(' ', Console.WindowWidth));
-        //            Console.SetCursorPosition(0, 23);
-        //            string nytt = Console.ReadLine();
-        //            PlacePoints(nytt);
-        //            break;
-        //            }
-        //        }
-
-        //        foreach (var terning in Dice.DiceList)
-        //        {
-        //            if (terning._diceValue == i) { localsum += terning._diceValue; }
-        //        }
-
-        //        foreach (var felt in PlayField.smallList)
-        //        {
-        //            if (felt.validvalue == i && felt.avalibe == true)
-        //            {
-        //                felt.sum = localsum;
-        //                GameEngine.smallsum += localsum;
-        //            }
-        //            else if (felt.validvalue == i && felt.avalibe == false)
-        //            {
-        //                Console.SetCursorPosition(0, 22);
-        //                Console.WriteLine(String.Format("{0, -60}", "Feltet er brukt fra før, skriv inn annet felt"));
-        //                Console.Write(new string(' ', Console.WindowWidth));
-        //                Console.SetCursorPosition(0, 23);
-        //                string gammel = Console.ReadLine();
-        //                PlacePoints(gammel);
-        //                break;
-        //            }
-        //        }
-        //        foreach (var felt in PlayField.smallList)
-        //        {
-        //            if ((felt.name == input) || (felt.shortname == shortinput)) { felt.avalibe = false; }
-        //        }
-        //}
 
         public static void PlayFieldMenu(Player aktivspiller)
 
@@ -146,20 +96,19 @@ namespace BearDiceGame
             {
                 case ConsoleKey.DownArrow:
               
-                    if (PlayField.menuselect < 14) { PlayField.menuselect++; }
-                    else if (PlayField.menuselect >= 14) { PlayField.menuselect = 0;}
+                    if (PlayField.menuselect < 17) { PlayField.menuselect++; }
+                    else if (PlayField.menuselect >= 17) { PlayField.menuselect = 0;}
                     View.UpdateView(aktivspiller);
                     break;
 
                 case ConsoleKey.UpArrow:
-                    if (PlayField.menuselect <= 0) { PlayField.menuselect = 14; }
+                    if (PlayField.menuselect <= 0) { PlayField.menuselect = 17; }
                     else if (PlayField.menuselect > 0) { PlayField.menuselect--; }
                     View.UpdateView(aktivspiller);
                     break;
 
                 case ConsoleKey.Enter:
                     PlacePoints2(PlayField.menuselect, aktivspiller);
-                   
                     PlayField.fieldchooser = false;
                     View.UpdateView(aktivspiller);
 

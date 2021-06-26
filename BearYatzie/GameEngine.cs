@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Net.Mime;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,20 +13,24 @@ namespace BearDiceGame
 {
     class GameEngine
     {
-        public static int rollCounter = 3;
-        public static int turns = 14;
-        public static int smallsum = 0; 
-      
+        public static int rollCounter = 30;
+        
+        //public static int turns = 0;
+     
+       
 
 
         public static void TurnController(Player aktivspiller)
         {
+            Console.SetCursorPosition(0, 27);
             var input = Console.ReadKey();
 
                 switch (input.Key) //Switch on Key enum
                 {
                     case ConsoleKey.R:
-                       ThrowAndCheck(aktivspiller);
+                        Console.SetCursorPosition(0, 27);
+                        Console.Write(" ");
+                    ThrowAndCheck(aktivspiller);
                         break;
                     case ConsoleKey.D1:
                         Dice.LockDice(0);
@@ -84,49 +92,73 @@ namespace BearDiceGame
             }           
             //totalsum
             aktivspiller.playerscore[17] = aktivspiller.playerscore[17] + aktivspiller.playerscore[fieldNo];
+            
 
         }
 
         public static void PlayFieldMenu(Player aktivspiller)
 
         {
-            var input = Console.ReadKey();
+            if (aktivspiller.playerscore[PlayField.menuselect] != null)
+            {
+                for (var index = 0; index < aktivspiller.playerscore.Count - 1; index++)
+                {
+                    var felt = aktivspiller.playerscore[index];
+                    if (felt == null)
+                    {
+                        PlayField.menuselect = index;
+                    break;
+                    }
 
+                }
+            }
+            View.UpdateView(aktivspiller);
+            //View.ScoreField(aktivspiller);
+
+            Console.SetCursorPosition(0, 27);
+            var input = Console.ReadKey();
+           
             switch (input.Key) //Switch on Key enum
             {
+                  
                 case ConsoleKey.DownArrow:
-              
-                    if (PlayField.menuselect < 17) { PlayField.menuselect++; }
-                    else if (PlayField.menuselect >= 17) { PlayField.menuselect = 0;}
-                    View.UpdateView(aktivspiller);
+                    do
+                    {
+                        PlayField.menuselect++;
+                        if (PlayField.menuselect > 16) { PlayField.menuselect = 0; }
+                        
+                    } while (aktivspiller.playerscore[PlayField.menuselect] != null);
                     break;
 
                 case ConsoleKey.UpArrow:
-                    if (PlayField.menuselect <= 0) { PlayField.menuselect = 17; }
-                    else if (PlayField.menuselect > 0) { PlayField.menuselect--; }
-                    View.UpdateView(aktivspiller);
-                    break;
+                    do
+                    {
+                        PlayField.menuselect--;
+                        if (PlayField.menuselect < 0) { PlayField.menuselect = 16; }
 
+                    } while (aktivspiller.playerscore[PlayField.menuselect] != null);
+                    break;
                 case ConsoleKey.Enter:
                     PlacePoints2(PlayField.menuselect, aktivspiller);
                     PlayField.fieldchooser = false;
-                    View.UpdateView(aktivspiller);
-
+                    //View.UpdateView(aktivspiller);
                     break;
+                default:
+                    Console.SetCursorPosition(0, 27);
+                    Console.Write(" ");
+                    PlayFieldMenu(aktivspiller);
+                    break;
+                    
             }
         }
 
-        public static void NewRound()
+        public static void NextPlayer(Player aktivspiller)
         {
+            
             PlayField.fieldchooser = true;
-         
             GameBearYatzie.turnCounter--;
-            if (GameBearYatzie.turnCounter < 1)
-            {
-                EndGame();
-            }
-            else {
-                 rollCounter = 3;
+            rollCounter = 3;
+             
             
                 foreach (var terning in Dice.DiceList)
                 {
@@ -138,47 +170,89 @@ namespace BearDiceGame
                 {
                     field.potentialsum = 0;
                 }
-                    GameBearYatzie.TurnOn = true;
+                
+
+                if (GameBearYatzie.turnCounter <= 0)
+                {
+                    EndGame(aktivspiller);
+                }
+
+                GameBearYatzie.TurnOn = true;
+        }
+
+        public static void EndGame(Player aktivspiller)
+        {
+            GameBearYatzie.GameOn = false;
+            //List<string> winnerList = new List<string>();
+            //int? winnerscore = 0;
+            //int winnercount = winnerList.Count;
+
+            //foreach (var spiller in Player.PlayerList)
+            //{
+
+            //    if (spiller.playerscore[17] > winnerscore)
+            //    {
+            //        winnerscore = spiller.playerscore[17];
+
+            //    }
+
+            //}
+
+            Console.SetCursorPosition(7, 27);
+            Console.ForegroundColor = ConsoleColor.Red;
+            //Console.WriteLine(winnerList[0] + " vant med " + winnerscore + " poeng");
+            
+            Console.Write("        Spillet er over, trykk \"N\" for nytt spill                                    ");
+            Console.ForegroundColor = ConsoleColor.White;
+            
+
+
+            foreach (var player in Player.PlayerList)
+            {
+                for (var index = 0; index < player.playerscore.Count; index++)
+                {
+
+
+                    if (index == 6 || index == 7 || index == 17)
+                    {
+                        player.playerscore[index] = 0;
+                    }
+                    else
+                    {
+                        player.playerscore[index] = null;
+                    }
+                }
+            }
+
+            GameBearYatzie.turnCounter = (Player.PlayerList.Count * 15);
+            EndMenu(aktivspiller);
+
+        }
+
+        public static void EndMenu(Player aktivspiller)
+        {
+            Console.SetCursorPosition(0, 27);
+            var input = Console.ReadKey();
+           
+            switch (input.Key) //Switch on Key enum
+            {
+
+                case ConsoleKey.N:
+                    NextRound();
+                    break;
+                default:
+                    Console.SetCursorPosition(0, 27);
+                    Console.Write(" ");
+                    EndMenu(aktivspiller);
+                    break;
             }
         }
 
-        public static void EndGame()
+        public static void NextRound()
         {
-            Console.SetCursorPosition(0, 22);
-            if (smallsum > 30)
-            {
-                Console.WriteLine(String.Format("{0, -60}", "Gratulerer, ganske bra"));
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, 23);
-                foreach (var felt in PlayField.totalList)
-                {
-                    felt.sum = null;
-                    felt.avalibe = true;
-                    felt.potentialsum = 0;
-                }
-                smallsum = 0;
-                GameBearYatzie.turnCounter = 16;
-                NewRound();
-                
-            }
-
-            else if (smallsum < 31)
-            {
-                Console.WriteLine(String.Format("{0, -60}", "Dette var dårlig, du er et rasshøl!"));
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, 23);
-                foreach (var felt in PlayField.smallList)
-                {
-                    felt.sum = null;
-                    felt.avalibe = true;
-                    felt.potentialsum = 0;
-                }
-                smallsum = 0;
-                GameBearYatzie.turnCounter = 16;
-                NewRound();
-
-            }
-
+            GameBearYatzie.GameOn = true;
+            
+            View.UpdateView(Player.PlayerList[0]);
         }
     }
 }

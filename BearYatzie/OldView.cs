@@ -132,13 +132,13 @@ namespace BearDiceGame
 
                 if (i == 5)
                 {
-                    Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Sum", "", GameEngine.smallsum));
+                    //Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Sum", "", GameEngine.smallsum));
                     Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Bonus", "", "0"));
                 }
 
 
             }
-            Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Totalsum", "", GameEngine.smallsum));
+            //Console.WriteLine(String.Format("{0,-15}|{1,-12}|{2, 5}|", "Totalsum", "", GameEngine.smallsum));
             //Console.WriteLine("\n");
 
 

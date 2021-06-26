@@ -11,8 +11,8 @@ namespace BearDiceGame
         public static string Menu = "Trykk \"N\" for nytt spill\n" +
                                     "Trykk \"M\" for nytt minispill";
 
-        public static string RollInfoText = "Trykk \"R\" for å trille terninger \n" +
-                                            "Trykk Z X C V eller B for å fryse terning";
+        public static string RollInfoText = "Trykk \"R\" for å trille terninger. Trykk 1, 2, 3, 4 eller 5 for å holde terning";
+        public static string PointInfoText2 = "Bruk piltastene for å velge hvor du vil plassere poeng, trykk \"Enter\" for å plassere";
 
         public static void Welcome()
         {
@@ -25,16 +25,30 @@ namespace BearDiceGame
 
         public static void UpdateView(Player aktivspiller)
         {
-            DrawDice();
+            DrawDice(aktivspiller);
             ScoreField(aktivspiller);
         }
 
-        public static void DrawDice()
+        public static void DrawDice(Player aktivspiller)
         {
-            Console.Clear();
+            //Console.Clear();
+            Console.SetCursorPosition(73, 4);
+            Console.Write(aktivspiller.name + " sin tur     ");
+            Console.SetCursorPosition(73, 1);
+            //Console.WriteLine(String.Format("{0,6}{0,-12}", "",aktivspiller.name + " sin tur"));
+            Console.Write("Terningkast: " + GameEngine.rollCounter);
             Console.SetCursorPosition(0, 27);
-            Console.WriteLine("Tilgjengelige terningkast: " + GameEngine.rollCounter);
-            Console.WriteLine(RollInfoText);
+            var RollOrPlace = (GameBearYatzie.TurnOn == true) ? RollInfoText : PointInfoText2;
+            Console.Write(String.Format("       {0,-20}", RollOrPlace + "        "));
+
+            
+            //Console.SetCursorPosition(50, 27);
+            //Console.Write();
+
+
+
+
+
             Console.SetCursorPosition(0, 20);
             var cursorcount = 0;
 
@@ -42,9 +56,11 @@ namespace BearDiceGame
             {
                 if (terning._diceValue == 0)
                 {
+                    
+                    
                     Dice.ChooseDice(terning._diceValue, cursorcount, 0);
-                    Console.SetCursorPosition(cursorcount, 6);
-                    Console.WriteLine(" Nr " + (terning.diceNr));
+                    Console.SetCursorPosition(cursorcount, 5);
+                    Console.WriteLine(" Nr " + (terning.diceNr + 1));
                     //Console.SetCursorPosition(cursorcount +1 , 7);
                     //Console.WriteLine("   ?");
                     cursorcount += 15;
@@ -55,8 +71,8 @@ namespace BearDiceGame
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Dice.ChooseDice(terning._diceValue, cursorcount, 0);
-                    Console.SetCursorPosition(cursorcount, 6);
-                    Console.WriteLine(" Nr " + (terning.diceNr));
+                    Console.SetCursorPosition(cursorcount, 5);
+                    Console.WriteLine(" Nr " + (terning.diceNr + 1));
                     //Console.SetCursorPosition(cursorcount + 1, 7);
                     //Console.WriteLine(terning._diceValue);
                     Console.ResetColor();
@@ -67,24 +83,36 @@ namespace BearDiceGame
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Dice.ChooseDice(terning._diceValue, cursorcount, 0);
-                    Console.SetCursorPosition(cursorcount, 6);
-                    Console.WriteLine(" Nr " + (terning.diceNr));
+                    Console.SetCursorPosition(cursorcount, 5);
+                    Console.WriteLine(" Nr " + (terning.diceNr + 1));
                     //Console.SetCursorPosition(cursorcount + 1, 7);
                     //Console.WriteLine(terning._diceValue);
                     Console.ResetColor();
                     cursorcount += 15;
                 }
 
-                Console.WriteLine();
+               
             }
         }
 
         public static void ScoreField(Player aktivspiller)
         {
+            Console.WriteLine();
             Console.Write(String.Format("{0,-15}|", ""));
             foreach (var spiller in Player.PlayerList)
             {
-                Console.Write(String.Format("{0,-8}|",spiller.name));
+                if (spiller == aktivspiller)
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.Write(String.Format("{0,-8}", spiller.name));
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Write("|");
+                }
+                else
+                {
+                    Console.Write(String.Format("{0,-8}|", spiller.name));
+                }
+                
             }
 
             for (var i = 0; i < PlayField.totalList.Count; i++) {
@@ -119,11 +147,13 @@ namespace BearDiceGame
                             {
                                 Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
                             }
+                      
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                                Console.Write(String.Format("{0,8}", PlayField.totalList[i].potentialsum));
                                 Console.ForegroundColor = ConsoleColor.White;
+                                Console.Write("|");
                             }
                             
                         }
@@ -131,8 +161,9 @@ namespace BearDiceGame
                         {
                         
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.Write(String.Format("{0,8}", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("|");
                         }
 
                     }
@@ -146,8 +177,9 @@ namespace BearDiceGame
                         else if (spiller.playerscore[i] != null)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.Write(String.Format("{0,8}", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("|");
                         }
 
                     }
@@ -160,17 +192,21 @@ namespace BearDiceGame
                         if (i == PlayField.menuselect && spiller.playerscore[i] == null)
                         {
                             Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(String.Format("{0,8}", PlayField.totalList[i].potentialsum));
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.BackgroundColor = ConsoleColor.Black;
+                            Console.Write("|");
                         }
 
                         else if (i == PlayField.menuselect && spiller.playerscore[i] != null)
                         {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.BackgroundColor = ConsoleColor.Gray;
+                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(String.Format("{0,8}", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            Console.Write("|");
                         }
 
                         else if (i != PlayField.menuselect && spiller.playerscore[i] == null)
@@ -182,8 +218,9 @@ namespace BearDiceGame
                             else
                             {
                                 Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.Write(String.Format("{0,8}|", PlayField.totalList[i].potentialsum));
+                                Console.Write(String.Format("{0,8}", PlayField.totalList[i].potentialsum));
                                 Console.ForegroundColor = ConsoleColor.White;
+                                Console.Write("|");
                             }
 
                         }
@@ -192,9 +229,10 @@ namespace BearDiceGame
                         {
                           
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.Write(String.Format("{0,8}", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
-                          
+                            Console.Write("|");
+
                         }
 
                      
@@ -222,8 +260,9 @@ namespace BearDiceGame
                         else if (i != PlayField.menuselect && spiller.playerscore[i] != null)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(String.Format("{0,8}|", spiller.playerscore[i]));
+                            Console.Write(String.Format("{0,8}", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("|");
                         }
                     }
                     

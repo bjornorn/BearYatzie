@@ -17,20 +17,17 @@ namespace BearDiceGame
         public int potentialsum { get; set; }
         public int validvalue { get; set; }
 
-        public bool meetsRequirements = false;
 
         public static string[] smallfields = { "Enere", "Toere", "Treere", "Firere", "Femmere", "Seksere" };
-        //public static string sumstring = "Sum";
-        //public static string Bonus = ;
+     
         public static string[] bigFields = { "Sum", "Bonus", "1 Par", "2 Par", "3 like", "4 like", "Liten Straight", "Stor Straight", "Hus", "Sjanse", "Yatzy", "Totalsum" };
-        //public static string totalsum = ;
+    
         public static int menuselect { get; set; }
         public static bool fieldchooser = true;
-        
-
         public static List<PlayField> smallList = new List<PlayField>();
         public static List<PlayField> bigList = new List<PlayField>();
         public static List<PlayField> totalList = new List<PlayField>();
+        public static string[] specialfields = {"Sum", "Bonus", "Totalsum"};
 
         public PlayField(string name, int i)
         {
@@ -39,10 +36,12 @@ namespace BearDiceGame
             validvalue = i;
             this.avalibe = true;
             this.potentialsum = 0;
-            sum = null;
             this.smallfield = true;
             smallList.Add(this);
             totalList.Add(this);
+            sum = null;
+         
+            
         }
         public PlayField(string name, int i, bool smallfield)
         {
@@ -55,7 +54,13 @@ namespace BearDiceGame
             bigList.Add(this);
             totalList.Add(this);
             sum = null;
+            if (specialfields.Contains(name))
+            {
+                sum = 0;
+            }
         }
+
+
 
         public int smallCalcPotential(int i)
         {
@@ -81,7 +86,7 @@ namespace BearDiceGame
             bool found4equal = false;
             int LStraightCount = 0;
             int SStraightCount = 0;
-            int houseCounter = 0;
+            
             int HouseSum = 0;
             int ChanseSum = 0;
             int YatzieSum = 0;
@@ -160,31 +165,29 @@ namespace BearDiceGame
                     }
 
                 //Hus
-                if (terningArray[terningNummer] > 1 && houseCounter < 2)
+                if (terningArray[terningNummer] > 2)
                 {
-                    if (terningArray[terningNummer] > 1)
+                    if (terningArray[terningNummer] > 4)
                     {
-                      
-                        if (terningArray[terningNummer] > 4)
-                        {
-                            HouseSum += (terningverdi * 5);
-                            houseCounter += 2;
-                        }
-                        else if (terningArray[terningNummer] > 2)
-                        {
-                            HouseSum += (terningverdi * 3);
-                            houseCounter++;
-                        }
-                        else
-                        {
-                            HouseSum += (terningverdi * 2);
-                            houseCounter++;
-                        }
+                        PlayField.totalList[14].potentialsum = (terningverdi * 5);
+                    }
+                    else {
 
-                        if (houseCounter > 1)
+                        int house3Counter = 0;
+                    int house2Counter = 0;
+                    //int trippel = terningNummer;
+                    house3Counter = (terningverdi * 3);
+                    for (var index = 0; index < terningArray.Length; index++)
+                    {
+                        var terningnummer = terningArray[index];
+                        if (terningArray[index] > 1 && index != terningNummer)
                         {
-                            PlayField.totalList[14].potentialsum = HouseSum;
+                            int terningsverdi2 = index + 1;
+                            house2Counter = (terningsverdi2 * 2);
+                            PlayField.totalList[14].potentialsum = house3Counter + house2Counter;
+                            break;
                         }
+                    }
                     }
                 }
                 //Sjanse

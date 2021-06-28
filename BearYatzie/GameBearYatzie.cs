@@ -8,7 +8,7 @@ namespace BearDiceGame
         public static bool GameOn = false;
         public static bool TurnOn = false;
         public static int turnCounter = 15;
-        public static int players = 2;
+        //public static int players = 2;
 
 
         public GameBearYatzie()
@@ -29,10 +29,10 @@ namespace BearDiceGame
             }
 
             Player Bjørn = new Player("Bjørn");
-            Player Andre = new Player("Andre");
-            Player Eilert = new Player("Eilert");
+            //Player Andre = new Player("Andre");
+            //Player Eilert = new Player("Eilert");
 
-            GameBearYatzie.turnCounter = (Player.PlayerList.Count * 1);
+            GameBearYatzie.turnCounter = (Player.PlayerList.Count * 15);
 
             TurnOn = true;
         }

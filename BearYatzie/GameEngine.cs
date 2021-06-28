@@ -13,7 +13,7 @@ namespace BearDiceGame
 {
     class GameEngine
     {
-        public static int rollCounter = 30;
+        public static int rollCounter = 3;
         
         //public static int turns = 0;
      
@@ -78,22 +78,26 @@ namespace BearDiceGame
             //sett poeng i felt
             aktivspiller.playerscore[fieldNo] = PlayField.totalList[fieldNo].potentialsum;
             //fjern nullable
-            aktivspiller.playerscore[6] ??= 0;
-            aktivspiller.playerscore[17] ??= 0;
+            aktivspiller.playerscore[6] = 0;
+            aktivspiller.playerscore[17] = 0;
             //sum
-            if (fieldNo < 6)
+            for (int index = 0; index < aktivspiller.playerscore.Count - 12; index++)
             {
-                aktivspiller.playerscore[6] = (aktivspiller.playerscore[6] + aktivspiller.playerscore[fieldNo]);
+                aktivspiller.playerscore[6] += aktivspiller.playerscore[index];
             }
+            
             //bonus
             if (aktivspiller.playerscore[6] > 62)
             {
                 aktivspiller.playerscore[7] = 50;
+
             }           
             //totalsum
-            aktivspiller.playerscore[17] = aktivspiller.playerscore[17] + aktivspiller.playerscore[fieldNo];
-            
-
+            for (var index = 6; index < aktivspiller.playerscore.Count - 1; index++)
+            {
+                var score = aktivspiller.playerscore[index];
+                aktivspiller.playerscore[17] += score;
+            }
         }
 
         public static void PlayFieldMenu(Player aktivspiller)

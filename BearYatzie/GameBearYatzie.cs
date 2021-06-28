@@ -28,11 +28,6 @@ namespace BearDiceGame
                 id++;
             }
 
-
-            //Player Marten = new Player("Marten");
-            //Player Bjørn = new Player("Bjørn");
-            //Player Andre = new Player("Andre");
-            //Player Eilert = new Player("Eilert");
             View.NewGameView();
             GameBearYatzie.turnCounter = (Player.PlayerList.Count * 15);
             Console.CursorVisible = false;

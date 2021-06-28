@@ -56,11 +56,12 @@ namespace BearDiceGame
             rollCounter--;
             foreach (Dice terning in Dice.DiceList)
             {
+                beep += 50;
                 if (terning.diceIsLocked == false)
                 {
                     terning.DiceRoll();
-                    //Console.Beep(beep, 250);
-                    //beep += 100;
+                    Console.Beep(beep, 300);
+            
                 }
             }
             foreach (var felt in PlayField.totalList)
@@ -147,7 +148,7 @@ namespace BearDiceGame
                 case ConsoleKey.Enter:
                     PlacePoints2(PlayField.menuselect, aktivspiller);
                     PlayField.fieldchooser = false;
-                    //View.UpdateView(aktivspiller);
+          
                     break;
                 default:
                     Console.SetCursorPosition(0, 27);
@@ -193,7 +194,7 @@ namespace BearDiceGame
 
             Console.SetCursorPosition(7, 27);
             Console.ForegroundColor = ConsoleColor.Red;
-            //Console.WriteLine(winnerList[0] + " vant med " + winnerscore + " poeng");
+           
             
             Console.Write("        Spillet er over, trykk \"N\" for nytt spill                                    ");
             Console.ForegroundColor = ConsoleColor.White;

@@ -7,6 +7,8 @@ namespace BearDiceGame
         public int playerTurns { get; set; }
         public string name { get; set; }
 
+        public bool playergotbonus { get; set; } 
+
         //public List<PlayerField> playerScore = new List<PlayField>();
         //public List<PlayField> playerscore = new List<PlayField>();
         public List<int?> playerscore = new List<int?>();
@@ -18,7 +20,7 @@ namespace BearDiceGame
         {
             this.playerTurns = 3;
             this.name = name;
-            
+            playergotbonus = false;
             foreach (var field in PlayField.totalList)
             {
                 playerscore.Add(field.sum);

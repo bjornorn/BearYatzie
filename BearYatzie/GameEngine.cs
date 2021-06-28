@@ -78,26 +78,26 @@ namespace BearDiceGame
             //sett poeng i felt
             aktivspiller.playerscore[fieldNo] = PlayField.totalList[fieldNo].potentialsum;
             //fjern nullable
-            aktivspiller.playerscore[6] = 0;
-            aktivspiller.playerscore[17] = 0;
+            aktivspiller.playerscore[6] ??= 0;
+            aktivspiller.playerscore[17] ??= 0;
             //sum
-            for (int index = 0; index < aktivspiller.playerscore.Count - 12; index++)
+            if (fieldNo < 6)
             {
-                aktivspiller.playerscore[6] += aktivspiller.playerscore[index];
+                aktivspiller.playerscore[6] += PlayField.totalList[fieldNo].potentialsum; ;
             }
             
             //bonus
-            if (aktivspiller.playerscore[6] > 62)
+            if (aktivspiller.playerscore[6] > 62 && aktivspiller.playergotbonus == false )
             {
                 aktivspiller.playerscore[7] = 50;
+                aktivspiller.playerscore[17] = 50 + aktivspiller.playerscore[17];
+                aktivspiller.playergotbonus = true;
 
-            }           
-            //totalsum
-            for (var index = 6; index < aktivspiller.playerscore.Count - 1; index++)
-            {
-                var score = aktivspiller.playerscore[index];
-                aktivspiller.playerscore[17] += score;
             }
+            //totalsum
+
+            aktivspiller.playerscore[17] += PlayField.totalList[fieldNo].potentialsum;
+            
         }
 
         public static void PlayFieldMenu(Player aktivspiller)

@@ -28,6 +28,9 @@ namespace BearDiceGame
                 id++;
             }
 
+            Player Marten = new Player("Marten");
+            Player Marten2 = new Player("Marten");
+            Player Marten3 = new Player("Marten");
             Player Bjørn = new Player("Bjørn");
             //Player Andre = new Player("Andre");
             //Player Eilert = new Player("Eilert");

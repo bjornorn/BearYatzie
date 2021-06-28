@@ -14,6 +14,7 @@ namespace BearDiceGame
     class GameEngine
     {
         public static int rollCounter = 3;
+        public static int antallspillere = 1;
         
         //public static int turns = 0;
      
@@ -103,6 +104,7 @@ namespace BearDiceGame
         public static void PlayFieldMenu(Player aktivspiller)
 
         {
+
             if (aktivspiller.playerscore[PlayField.menuselect] != null)
             {
                 for (var index = 0; index < aktivspiller.playerscore.Count - 1; index++)
@@ -115,10 +117,10 @@ namespace BearDiceGame
                     }
 
                 }
-            }
-            View.UpdateView(aktivspiller);
+        }
+        View.UpdateView(aktivspiller);
             //View.ScoreField(aktivspiller);
-
+            
             Console.SetCursorPosition(0, 27);
             var input = Console.ReadKey();
            
@@ -187,20 +189,7 @@ namespace BearDiceGame
         public static void EndGame(Player aktivspiller)
         {
             GameBearYatzie.GameOn = false;
-            //List<string> winnerList = new List<string>();
-            //int? winnerscore = 0;
-            //int winnercount = winnerList.Count;
 
-            //foreach (var spiller in Player.PlayerList)
-            //{
-
-            //    if (spiller.playerscore[17] > winnerscore)
-            //    {
-            //        winnerscore = spiller.playerscore[17];
-
-            //    }
-
-            //}
 
             Console.SetCursorPosition(7, 27);
             Console.ForegroundColor = ConsoleColor.Red;
@@ -257,6 +246,31 @@ namespace BearDiceGame
             GameBearYatzie.GameOn = true;
             
             View.UpdateView(Player.PlayerList[0]);
+        }
+
+        public static void createPlayers(int antallspillere)
+        {
+            for (int i = 0; i < antallspillere; i++)
+            {
+                Console.SetCursorPosition(20, 12);
+                Console.WriteLine("Skriv inn navn på spiller " + (i + 1));
+                Console.SetCursorPosition(20, 13);
+                string playername = Console.ReadLine();
+                if (playername.Length > 8)
+                {
+                    playername = playername.Substring(0, 8);
+                }
+                else if (playername.Length < 1)
+                {
+                    playername = "Spiller" + (i + 1);
+                }
+                new Player(playername);
+                Console.SetCursorPosition(20, 13);
+                Console.WriteLine("                          ");
+
+            }
+            Console.Clear();
+      
         }
     }
 }

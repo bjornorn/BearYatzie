@@ -28,15 +28,15 @@ namespace BearDiceGame
                 id++;
             }
 
-            Player Marten = new Player("Marten");
-            Player Marten2 = new Player("Marten");
-            Player Marten3 = new Player("Marten");
-            Player Bjørn = new Player("Bjørn");
+
+            //Player Marten = new Player("Marten");
+            //Player Bjørn = new Player("Bjørn");
             //Player Andre = new Player("Andre");
             //Player Eilert = new Player("Eilert");
-
+            View.NewGameView();
             GameBearYatzie.turnCounter = (Player.PlayerList.Count * 15);
-
+            Console.CursorVisible = false;
+           
             TurnOn = true;
         }
 
@@ -45,7 +45,7 @@ namespace BearDiceGame
         public void PlayGame() {
             
             View.UpdateView(Player.PlayerList[0]);
-            Console.CursorVisible = false;
+            
             while (GameOn)
             {
                 foreach (var aktivspiller in Player.PlayerList)
@@ -55,7 +55,7 @@ namespace BearDiceGame
                         View.UpdateView(aktivspiller);
                         GameEngine.TurnController(aktivspiller);
 
-                        //View.UpdateView(aktivspiller);
+                     
                         if (GameEngine.rollCounter < 1)
                         {
                           GameBearYatzie.TurnOn = false;
@@ -63,11 +63,9 @@ namespace BearDiceGame
                         }
                     }
                     
-                    //View.UpdateView(aktivspiller);
+               
                     while (PlayField.fieldchooser == true) { GameEngine.PlayFieldMenu(aktivspiller); }
 
-
-                    
                     GameEngine.NextPlayer(aktivspiller);
                 }
                 GameEngine.NextRound();

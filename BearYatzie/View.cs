@@ -103,13 +103,17 @@ namespace BearDiceGame
             {
                 if (spiller == aktivspiller)
                 {
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.Green;
                     Console.Write(String.Format("{0,-8}", spiller.name));
                     Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+
                     Console.Write("|");
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(String.Format("{0,-8}|", spiller.name));
                 }
                 
@@ -118,7 +122,34 @@ namespace BearDiceGame
             for (var i = 0; i < PlayField.totalList.Count; i++) {
                 
                 Console.Write("\r\n");
-                Console.Write(String.Format("{0,-15}|", PlayField.totalList[i].name));
+                if (aktivspiller.playerscore[i] == null)
+                {
+                    if (i == PlayField.menuselect && GameBearYatzie.TurnOn == false)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(String.Format("{0,-15}", PlayField.totalList[i].name));
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("|");
+                    }
+                    else
+                    {
+                        
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write(String.Format("{0,-15}", PlayField.totalList[i].name));
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("|");
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(String.Format("{0,-15}", PlayField.totalList[i].name));
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write("|");
+                }
+                
                 PlayerScoreView(i, aktivspiller);
             }
 
@@ -191,7 +222,7 @@ namespace BearDiceGame
                     {
                         if (i == PlayField.menuselect && spiller.playerscore[i] == null)
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
+                            Console.BackgroundColor = ConsoleColor.White;
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Write(String.Format("{0,8}", PlayField.totalList[i].potentialsum));
                             Console.ForegroundColor = ConsoleColor.White;
@@ -201,7 +232,7 @@ namespace BearDiceGame
 
                         else if (i == PlayField.menuselect && spiller.playerscore[i] != null)
                         {
-                            Console.BackgroundColor = ConsoleColor.Gray;
+                            Console.BackgroundColor = ConsoleColor.White;
                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                             Console.Write(String.Format("{0,8}", spiller.playerscore[i]));
                             Console.ForegroundColor = ConsoleColor.White;
@@ -255,6 +286,7 @@ namespace BearDiceGame
                         else if (i != PlayField.menuselect && spiller.playerscore[i] == null)
                         {
                             Console.Write(String.Format("{0,8}|", "0"));
+
                         }
 
                         else if (i != PlayField.menuselect && spiller.playerscore[i] != null)
@@ -267,8 +299,61 @@ namespace BearDiceGame
                     }
                     
                 }
-               
             }
+        }
+
+        public static void NewGameView()
+        {
+            Console.SetCursorPosition(20,12);
+            Console.Write("Hvor mange skal spille?\n");
+            Console.SetCursorPosition(20, 13);
+            Console.Write("Bruk \"Pil opp\" eller \"Pil ned\" for å velge antall spillere\n");
+            Console.SetCursorPosition(20, 14);
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(GameEngine.antallspillere);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            var input = Console.ReadKey();
+            switch (input.Key) //Switch on Key enum
+            {
+
+                case ConsoleKey.UpArrow:
+                    if (GameEngine.antallspillere > 8)
+                    {
+                        GameEngine.antallspillere = 1;
+                    }
+                    else
+                    {
+                        //Console.SetCursorPosition(20, 14);
+                        GameEngine.antallspillere++;
+                    }
+                    NewGameView();
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (GameEngine.antallspillere < 2)
+                    {
+                        GameEngine.antallspillere = 9;
+                    }
+                    else
+                    {
+                        //Console.SetCursorPosition(20, 14);
+                        GameEngine.antallspillere--;
+                    }
+                    NewGameView();
+                    break;
+                case ConsoleKey.Enter:
+                    Console.Clear();
+                    GameEngine.createPlayers(GameEngine.antallspillere);
+               
+                    break;
+                default:
+                    NewGameView();
+                    break;
+            }
+            
+
+            View.UpdateView(Player.PlayerList[0]);
         }
     }
 }
